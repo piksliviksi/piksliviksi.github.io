@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PIKSLIVIKSI // Systems Architecture & Engineering Catalog</title>
+  
+  <!-- Tailwind CSS Engine -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Fonts: Inter & JetBrains Mono for Swiss typographic hierarchy -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+          },
+          colors: {
+            mono: {
+              950: '#07080a',
+              900: '#0c0e12',
+              850: '#111419',
+              800: '#181c23',
+              700: '#232832',
+              600: '#343b49',
+              500: '#525b6c',
+              400: '#7e889b',
+              300: '#b1b8c5',
+              200: '#dce0e7',
+              100: '#f1f3f7',
+              50: '#fafbfd'
+            },
+            accent: {
+              amber: '#f59e0b',
+              orange: '#f97316',
+              cyan: '#0ea5e9',
+              emerald: '#10b981',
+              zinc: '#e4e4e7'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Strict modernist reset - sharp geometry */
+    * {
+      border-radius: 0px !important;
+    }
+    
+    body {
+      background-color: #08090c;
+      color: #d1d5db;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Subtle technical grid background */
+    .blueprint-grid {
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* Precision hairline borders */
+    .border-hairline {
+      border: 1px solid #1c2028;
+    }
+    .border-hairline-t { border-top: 1px solid #1c2028; }
+    .border-hairline-b { border-bottom: 1px solid #1c2028; }
+    .border-hairline-l { border-left: 1px solid #1c2028; }
+    .border-hairline-r { border-right: 1px solid #1c2028; }
+
+    /* Interactive item hover */
+    .system-card {
+      transition: background-color 140ms ease, border-color 140ms ease;
+    }
+    .system-card:hover {
+      background-color: #101318;
+      border-color: #384152;
+    }
+
+    /* Industrial scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #08090c;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #232832;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #525b6c;
+    }
+  </style>
+</head>
+
+<body class="blueprint-grid min-h-screen flex flex-col selection:bg-zinc-800 selection:text-white">
+
+  <!-- Top Functional Navigation -->
+  <header class="border-hairline-b bg-mono-950/95 sticky top-0 z-30 backdrop-blur-sm">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-14 flex items-center justify-between gap-4">
+        
+        <!-- Identity Branding -->
+        <div class="flex items-center space-x-4">
+          <a href="#" class="flex items-center space-x-2.5 text-white tracking-widest font-mono text-sm font-semibold uppercase hover:text-accent-orange transition-colors">
+            <span class="w-2.5 h-2.5 bg-accent-orange inline-block"></span>
+            <span>piksliviksi</span>
+          </a>
+          <span class="text-mono-700 hidden sm:inline">/</span>
+          <span class="text-mono-400 font-mono text-xs uppercase tracking-wider hidden sm:inline">Engineering Catalog</span>
+        </div>
+
+        <!-- Right System Indicators & External Link -->
+        <div class="flex items-center space-x-4 font-mono text-xs">
+          <div class="hidden md:flex items-center space-x-3 text-mono-400 border-hairline-r pr-4">
+            <span>INDEX: 13 REPOSITORIES</span>
+            <span class="text-mono-700">•</span>
+            <span id="utc-clock">00:00:00 UTC</span>
+          </div>
+
+          <a href="https://github.com/piksliviksi" target="_blank" rel="noopener noreferrer" 
+             class="inline-flex items-center space-x-2 px-3 py-1.5 border border-mono-700 hover:border-mono-400 text-mono-200 hover:text-white bg-mono-900 transition text-xs font-mono">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            <span>GITHUB</span>
+            <svg class="w-3 h-3 text-mono-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+    
+    <!-- Hero / Architecture Overview -->
+    <section class="border-hairline bg-mono-900/60 p-6 sm:p-10 mb-8">
+      <div class="max-w-4xl">
+        <div class="flex items-center space-x-2 text-mono-400 font-mono text-xs uppercase tracking-widest mb-3">
+          <span class="w-2 h-0.5 bg-mono-400 inline-block"></span>
+          <span>Technical Portfolio & System Specs</span>
+        </div>
+        
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-tight">
+          Defense Computing, Signals Intelligence &amp; Autonomous Systems.
+        </h1>
+        
+        <p class="mt-4 text-mono-300 text-sm sm:text-base leading-relaxed font-normal max-w-3xl">
+          An engineering catalog spanning passive RF interception, SDR counter-UAS suites, tactical C4ISR sensor fusion, resilient alternative PNT, and privacy-governed AI architectures. Designed for high survivability in electronic warfare and GPS-denied environments.
+        </p>
+      </div>
+
+      <!-- Quick Metrics Strip -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-mono-800 border-hairline mt-8 font-mono text-xs">
+        <div class="bg-mono-900 p-4">
+          <div class="text-mono-500 uppercase">Active Units</div>
+          <div class="text-xl font-semibold text-white mt-1" id="stat-total">13</div>
+        </div>
+        <div class="bg-mono-900 p-4">
+          <div class="text-mono-500 uppercase">Domain Clusters</div>
+          <div class="text-xl font-semibold text-white mt-1">05</div>
+        </div>
+        <div class="bg-mono-900 p-4">
+          <div class="text-mono-500 uppercase">Primary Stack</div>
+          <div class="text-xl font-semibold text-mono-200 mt-1">SDR / C4ISR / AI</div>
+        </div>
+        <div class="bg-mono-900 p-4">
+          <div class="text-mono-500 uppercase">Environment</div>
+          <div class="text-xl font-semibold text-accent-orange mt-1">CONTESTED RF</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Control Strip: Category Filters & Real-Time Search -->
+    <section class="mb-8 space-y-3">
+      <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+        
+        <!-- Category Filter Buttons -->
+        <div class="flex flex-wrap items-center gap-1 border-hairline bg-mono-950 p-1 font-mono text-xs" id="category-bar">
+          <!-- Injected via JS -->
+        </div>
+
+        <!-- Search Bar with Keyboard Shortcut Indicator -->
+        <div class="relative w-full lg:w-96">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-mono-500 font-mono text-xs">
+            <span>/</span>
+          </div>
+          <input 
+            type="text" 
+            id="search-input"
+            placeholder="Search system, protocol, frequency, or hardware..."
+            class="w-full bg-mono-900 border border-mono-700 focus:border-mono-200 pl-8 pr-16 py-2 text-xs text-white placeholder-mono-500 font-mono focus:outline-none transition-colors"
+          />
+          <div class="absolute inset-y-0 right-0 pr-2 flex items-center space-x-1 pointer-events-none text-[10px] font-mono text-mono-500">
+            <kbd class="px-1.5 py-0.5 border border-mono-700 bg-mono-950">ESC</kbd>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auxiliary Row: View Toggles & Status Filter Count -->
+      <div class="flex items-center justify-between text-xs font-mono text-mono-400 px-1">
+        <div class="flex items-center space-x-2">
+          <span>MATCHING SYSTEMS:</span>
+          <span class="text-white font-semibold" id="filter-count">13</span>
+          <span class="text-mono-600">|</span>
+          <span id="active-category-label" class="text-mono-300">ALL DOMAINS</span>
+        </div>
+
+        <div class="flex items-center space-x-1 border border-mono-800 p-0.5 bg-mono-950">
+          <button id="view-grid-btn" class="px-2.5 py-1 text-[11px] bg-mono-800 text-white font-mono flex items-center space-x-1 transition">
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z"/></svg>
+            <span>GRID</span>
+          </button>
+          <button id="view-table-btn" class="px-2.5 py-1 text-[11px] text-mono-400 hover:text-white font-mono flex items-center space-x-1 transition">
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M3 4h18v2H3zm0 7h18v2H3zm0 7h18v2H3z"/></svg>
+            <span>MATRIX</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grid View Container -->
+    <div id="catalog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-mono-800 border-hairline">
+      <!-- Generated via JS -->
+    </div>
+
+    <!-- Matrix / Table View Container (Initially Hidden) -->
+    <div id="catalog-table-container" class="hidden border-hairline overflow-x-auto bg-mono-950">
+      <table class="w-full text-left font-mono text-xs border-collapse">
+        <thead>
+          <tr class="border-hairline-b bg-mono-900 text-mono-400 uppercase text-[10px] tracking-wider">
+            <th class="p-3 w-12 text-center">ID</th>
+            <th class="p-3 w-48">SYSTEM NAME</th>
+            <th class="p-3 w-40">DOMAIN</th>
+            <th class="p-3">TECHNICAL SUMMARY</th>
+            <th class="p-3 w-48">HARDWARE / PROTOCOL</th>
+            <th class="p-3 w-32 text-right">ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody id="catalog-table-body" class="divide-y divide-mono-800">
+          <!-- Generated via JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty State Result -->
+    <div id="empty-state" class="hidden border-hairline bg-mono-900/50 p-12 text-center font-mono">
+      <div class="text-mono-500 text-xs uppercase tracking-widest mb-2">[ NO SYSTEMS MATCH CRITERIA ]</div>
+      <p class="text-mono-300 text-sm">No engineering records found matching current query or domain filter.</p>
+      <button onclick="resetFilters()" class="mt-4 px-4 py-2 border border-mono-700 hover:border-white text-xs text-white bg-mono-850 uppercase transition">
+        Reset Query Filter
+      </button>
+    </div>
+  </main>
+
+  <!-- Inspection Slide-Over Drawer (Squared, High Information Density) -->
+  <aside id="drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-xl bg-mono-950 border-hairline-l transform translate-x-full transition-transform duration-200 ease-out flex flex-col font-mono" aria-hidden="true">
+    
+    <!-- Drawer Header -->
+    <div class="p-5 border-hairline-b bg-mono-900/90 flex items-start justify-between gap-4">
+      <div>
+        <div class="flex items-center space-x-2 text-[11px] text-mono-400 uppercase mb-1">
+          <span id="drawer-id" class="text-accent-orange font-semibold">SYS_00</span>
+          <span>//</span>
+          <span id="drawer-category" class="text-mono-200">DOMAIN</span>
+        </div>
+        <h2 id="drawer-title" class="text-xl font-semibold text-white tracking-tight font-sans">System Specification</h2>
+      </div>
+
+      <button id="drawer-close-btn" class="p-2 border border-mono-700 hover:border-mono-400 text-mono-400 hover:text-white transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Drawer Body / Technical Dossier -->
+    <div class="p-6 overflow-y-auto space-y-6 flex-grow text-xs">
+      
+      <!-- Primary Mission Scope -->
+      <div>
+        <div class="text-[10px] text-mono-500 uppercase tracking-widest mb-1.5">Operational Mission</div>
+        <p id="drawer-desc" class="text-mono-200 font-sans text-sm leading-relaxed bg-mono-900 p-4 border border-mono-800"></p>
+      </div>
+
+      <!-- Architecture Specifications -->
+      <div>
+        <div class="text-[10px] text-mono-500 uppercase tracking-widest mb-2">Technical Architecture &amp; Execution Profile</div>
+        <ul id="drawer-specs" class="space-y-2 border-hairline p-4 bg-mono-900/40 text-mono-300">
+          <!-- Populated by JS -->
+        </ul>
+      </div>
+
+      <!-- Target Hardware & Integration Stack -->
+      <div class="grid grid-cols-2 gap-2 text-[11px]">
+        <div class="border-hairline p-3 bg-mono-900/60">
+          <div class="text-mono-500 text-[10px] uppercase">Execution Platform</div>
+          <div id="drawer-platform" class="text-white mt-1 font-semibold">Target Hardware</div>
+        </div>
+        <div class="border-hairline p-3 bg-mono-900/60">
+          <div class="text-mono-500 text-[10px] uppercase">Telemetry / Protocol</div>
+          <div id="drawer-protocol" class="text-white mt-1 font-semibold">Protocol Bus</div>
+        </div>
+      </div>
+
+      <!-- Keywords / Signatures -->
+      <div>
+        <div class="text-[10px] text-mono-500 uppercase tracking-widest mb-2">Technology &amp; Signal Tags</div>
+        <div id="drawer-tags" class="flex flex-wrap gap-1.5">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Terminal Git Clone Command -->
+      <div>
+        <div class="text-[10px] text-mono-500 uppercase tracking-widest mb-2">Git Remote Clone</div>
+        <div class="flex items-center border border-mono-700 bg-mono-900">
+          <code id="drawer-clone-cmd" class="px-3 py-2 text-mono-300 flex-grow text-[11px] overflow-x-auto select-all">git clone https://github.com/piksliviksi/...</code>
+          <button id="drawer-copy-btn" class="px-3 py-2 border-hairline-l hover:bg-mono-800 text-mono-400 hover:text-white transition uppercase text-[10px]">
+            COPY
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawer Footer Actions -->
+    <div class="p-4 border-hairline-t bg-mono-900 flex items-center justify-between gap-3">
+      <button id="drawer-export-btn" class="px-3 py-2 border border-mono-700 hover:border-mono-400 text-mono-300 hover:text-white text-xs transition">
+        COPY BRIEF
+      </button>
+
+      <a id="drawer-repo-btn" href="#" target="_blank" rel="noopener noreferrer" 
+         class="px-4 py-2 bg-white hover:bg-mono-200 text-black font-semibold text-xs transition flex items-center space-x-1.5">
+        <span>VIEW REPOSITORY</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Backdrop for Drawer -->
+  <div id="drawer-backdrop" class="fixed inset-0 z-40 bg-black/70 backdrop-blur-xs hidden transition-opacity"></div>
+
+  <!-- Minimalist Clean Industrial Footer -->
+  <footer class="border-hairline-t bg-mono-950 font-mono text-xs text-mono-500 mt-auto">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <span class="w-1.5 h-1.5 bg-mono-600 inline-block"></span>
+        <span class="text-mono-400">AUTHOR: piksliviksi</span>
+        <span class="text-mono-700">|</span>
+        <span>DEFENSE, EW &amp; AUTONOMOUS SYSTEMS</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="https://github.com/piksliviksi" target="_blank" class="hover:text-mono-300 transition">github.com/piksliviksi</a>
+        <span class="text-mono-700">/</span>
+        <span class="text-mono-600">ALL SYSTEMS FIELD EVALUATED</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Notification Toast (Squared, Minimal) -->
+  <div id="toast" class="fixed bottom-4 right-4 z-50 transform translate-y-16 opacity-0 transition-all duration-200 pointer-events-none">
+    <div class="px-4 py-2 bg-mono-900 border border-mono-600 text-mono-100 font-mono text-xs shadow-2xl flex items-center space-x-2">
+      <span class="w-1.5 h-1.5 bg-accent-orange inline-block"></span>
+      <span id="toast-text">System copied to clipboard.</span>
+    </div>
+  </div>
+
+  <script>
+    // Complete 13 Repository Systems Specification
+    const REPOSITORIES = [
+      {
+        id: "01",
+        name: "Kratt",
+        slug: "Kratt",
+        domain: "AI & OSINT",
+        role: "Market Intelligence Engine",
+        platform: "Containerized / Air-Gapped",
+        protocol: "Event Stream / REST",
+        description: "AI-driven market intelligence platform designed for monitoring cryptocurrency and equities. It analyzes market trends, asset momentum, and sentiment data to generate automated, actionable trading insights.",
+        specs: [
+          "Streaming financial order book and sentiment ingestion pipelines",
+          "Automated momentum tracking and multi-indicator anomaly scoring",
+          "Autonomous quantitative modeling decoupled from commercial SaaS feeds",
+          "Lightweight deployment profile capable of sovereign local execution"
+        ],
+        tags: ["AI/ML", "Quantitative Intelligence", "Market Trends", "Sentiment Analysis", "Python"]
+      },
+      {
+        id: "02",
+        name: "TMSI-sensor",
+        slug: "TMSI-sensor",
+        domain: "RF & EW",
+        role: "Passive Airborne SIGINT Sensor",
+        platform: "Raspberry Pi Zero 2W",
+        protocol: "LTE Uplink / Kismet API",
+        description: "Airborne passive radio frequency sensor built on a Raspberry Pi Zero 2W. It captures cellular identifiers (TMSI/IMSI) alongside Wi-Fi and Bluetooth traffic, pairing localized coordinates with an LTE uplink to stream live signals data into Kismet.",
+        specs: [
+          "Passive GSM TMSI and IMSI logging without localized RF transmission",
+          "Simultaneous dual-band 802.11 Wi-Fi and Bluetooth BLE beacon observation",
+          "Direct integration with Kismet logging servers through cellular telemetry backhaul",
+          "Minimal SWaP-C profile engineered specifically for sub-250g aerial scouts"
+        ],
+        tags: ["Passive SIGINT", "TMSI/IMSI", "Pi Zero 2W", "Kismet", "Cellular", "LTE Uplink"]
+      },
+      {
+        id: "03",
+        name: "PlutoSky",
+        slug: "PlutoSky",
+        domain: "RF & EW",
+        role: "Counter-UAS SDR Detector / Jammer",
+        platform: "ADALM-Pluto SDR / x86",
+        protocol: "Direct RF Synthesizer",
+        description: "Portable Software-Defined Radio (SDR) platform engineered to detect, monitor, and counter First-Person View (FPV) drones and ExpressLRS (ELRS) control links. It provides localized tactical airspace awareness and targeted RF jamming capabilities.",
+        specs: [
+          "Fast spectral scanning across 868MHz, 915MHz, and 2.4GHz ELRS hopping bands",
+          "Automatic detection and visual waterfall alert for analog 5.8GHz video transmissions",
+          "SDR-synthesized selective RF suppression against adversarial FPV links",
+          "Designed for portable field kits utilizing ADALM-Pluto transceivers"
+        ],
+        tags: ["SDR", "Counter-UAS", "ExpressLRS", "FPV Denial", "Electronic Warfare", "ADALM-Pluto"]
+      },
+      {
+        id: "04",
+        name: "C4ISR SENTINEL",
+        slug: "SENTINEL",
+        domain: "C4ISR & Recon",
+        role: "Command & Control Fusion Engine",
+        platform: "Distributed Edge Nodes",
+        protocol: "Tactical Mesh / ZeroMQ",
+        description: "Centralized command, control, communications, computers, intelligence, surveillance, and reconnaissance platform. It aggregates multi-source battlefield data and automated tracking feeds to maintain shared situational awareness across tactical units.",
+        specs: [
+          "Aggregated Common Operating Picture (COP) integrating heterogeneous sensor feeds",
+          "Automated target coordinate calculation and multi-sensor vector alignment",
+          "Resilient synchronization across low-bandwidth, disrupted tactical radio networks",
+          "Modular operator dashboard displaying live airborne and terrestrial assets"
+        ],
+        tags: ["C4ISR", "Command & Control", "Target Tracking", "Situational Awareness", "Data Fusion"]
+      },
+      {
+        id: "05",
+        name: "SpoofGrid",
+        slug: "SpoofGrid",
+        domain: "RF & EW",
+        role: "GNSS Jamming & Spoofing Suite",
+        platform: "Software-Defined Radio",
+        protocol: "GNSS L1/L2 Synthesizer",
+        description: "Electronic warfare evaluation suite designed for testing GPS jamming and spoofing vectors. It allows operators to simulate GNSS interference and assess the navigation resilience of hardware in contested environments.",
+        specs: [
+          "SDR-generated ephemeris generation for GPS L1/L2 and multi-constellation testbeds",
+          "Automated drift injection to test receiver anti-spoofing and RAIM thresholds",
+          "Controllable power outputs for bench-top shielded RF enclosure validation",
+          "Auditing harness for unmanned navigation systems under electronic attack"
+        ],
+        tags: ["Electronic Warfare", "GPS Spoofing", "GNSS Denial", "SDR", "Navigation Resilience"]
+      },
+      {
+        id: "06",
+        name: "GSM-NAVI",
+        slug: "GSM-NAVI",
+        domain: "Alternative PNT",
+        role: "Cellular Tower Resilient Navigation",
+        platform: "Embedded Linux / Modem",
+        protocol: "Timing Advance / RSSI",
+        description: "Resilient positioning and navigation backup framework that calculates location using terrestrial cellular tower signals. It provides autonomous platforms with dependable navigation when GPS signals are degraded, jammed, or spoofed.",
+        specs: [
+          "Trilateration based on GSM Timing Advance (TA) parameters and tower coordinates",
+          "Completely independent of space-based GNSS/GPS constellations",
+          "Local offline cellular base-station database for disconnected tactical operations",
+          "Automatic failover routing for autonomous autopilots losing satellite lock"
+        ],
+        tags: ["Alternative PNT", "GPS-Denied", "Cellular Navigation", "GSM Triangulation", "Resilient Nav"]
+      },
+      {
+        id: "07",
+        name: "QGC-Simulator",
+        slug: "QGC-Simulator",
+        domain: "Autonomy & Sim",
+        role: "HUGINN Companion Flight Simulator",
+        platform: "QGroundControl / SITL",
+        protocol: "MAVLink v2.0",
+        description: "Dedicated companion flight and mission simulator built specifically for the HUGINN UAV platform. Integrated with QGroundControl, it allows operators to test autonomous flight plans, payload behavior, and control parameters virtually before live deployment.",
+        specs: [
+          "Full software-in-the-loop (SITL) emulation tailored to HUGINN fixed-wing dynamics",
+          "Native MAVLink integration for rapid pre-mission route validation in QGroundControl",
+          "Synthetic injection of EW perturbations, GPS dropouts, and aerodynamic turbulence",
+          "Virtual test bench for automated payload trigger routines prior to physical flight"
+        ],
+        tags: ["Simulation", "QGroundControl", "HUGINN Companion", "MAVLink", "SITL", "Mission Validation"]
+      },
+      {
+        id: "08",
+        name: "ISR_master",
+        slug: "ISR_master",
+        domain: "C4ISR & Recon",
+        role: "ISR Pipeline & Sensor Orchestrator",
+        platform: "Linux Edge Server",
+        protocol: "gRPC / Event Bus",
+        description: "Central management pipeline for organizing and processing Intelligence, Surveillance, and Reconnaissance operations. It coordinates multiple sensor inputs, streamlines intelligence aggregation, and manages target handoffs.",
+        specs: [
+          "Sensor tasking orchestrator directing multi-agent reconnaissance sorties",
+          "Telemetry and target state normalization across airborne and ground feeds",
+          "Automated cue-to-sensor handoff logic when target exits primary camera swath",
+          "High-throughput backpressure message pipeline for field data ingestion"
+        ],
+        tags: ["ISR Operations", "Sensor Fusion", "Target Hand-off", "Recon Pipeline", "Data Ingestion"]
+      },
+      {
+        id: "09",
+        name: "aetherstack",
+        slug: "aetherstack",
+        domain: "AI & OSINT",
+        role: "Privacy-Preserving LLM Orchestration",
+        platform: "Self-Hosted / Sovereign",
+        protocol: "Local REST / vLLM",
+        description: "Privacy-first Large Language Model (LLM) orchestration environment. It provides strict data governance, local processing controls, and built-in GDPR compliance so organizations can deploy AI models securely without exposing sensitive information.",
+        specs: [
+          "Deterministic local inference routing preventing external commercial cloud leaks",
+          "Automated PII detection, redaction, and compliance ledger generation",
+          "Strict data retention policies conforming to European GDPR standards",
+          "Hardware-accelerated backend connectors for local vLLM, TensorRT-LLM, and Ollama"
+        ],
+        tags: ["LLM Orchestration", "Privacy Architecture", "GDPR Hardened", "Local AI", "Data Governance"]
+      },
+      {
+        id: "10",
+        name: "O-CEHTP",
+        slug: "O-CEHTP",
+        domain: "AI & OSINT",
+        role: "Hardened OSINT Collection Platform",
+        platform: "Sandboxed Host",
+        protocol: "Encrypted Evidence Vault",
+        description: "Comprehensive Open-Source Intelligence (OSINT) collection and investigation platform. It features an encrypted chain-of-custody evidence locker, isolated sandboxing, active cyber protection defenses, and a modular plugin architecture for customized investigations.",
+        specs: [
+          "Cryptographically hashed evidence vault with immutable chain-of-custody logging",
+          "Isolated headless browsing sandbox mitigating investigator profiling and tracking",
+          "Active counter-reconnaissance mechanisms to guard research identities",
+          "Extensible plugin system for custom data scrapers, entity extractors, and graph solvers"
+        ],
+        tags: ["OSINT", "Sandboxing", "Evidence Locker", "Cyber Defense", "Investigation", "Plugin System"]
+      },
+      {
+        id: "11",
+        name: "CROW",
+        slug: "CROW",
+        domain: "C4ISR & Recon",
+        role: "Tactical Reconnaissance Payload",
+        platform: "Ultra-Compact Embedded",
+        protocol: "Serial / Ethernet Mesh",
+        description: "Lightweight, rapidly deployable tactical payload and reconnaissance unit. It provides close-range electronic monitoring and surveillance capabilities, designed for easy integration across mobile platforms or ground stations.",
+        specs: [
+          "Low-SWaP form factor adaptable to unmanned ground rovers and lightweight drones",
+          "Passive spectrum monitoring and short-range acoustic/RF signature logging",
+          "Minimal power draw supporting extended battery-operated reconnaissance stays",
+          "Anti-tamper hardware trigger with immediate memory sanitization / zeroize"
+        ],
+        tags: ["Tactical Payload", "Close-Range Recon", "SWaP-C", "Low Power", "Surveillance", "Anti-Tamper"]
+      },
+      {
+        id: "12",
+        name: "HUGINN",
+        slug: "HUGINN",
+        domain: "Autonomy & Sim",
+        role: "Long-Range Reconnaissance UAV",
+        platform: "Fixed-Wing / Hybrid VTOL",
+        protocol: "MAVLink / Encrypted Video",
+        description: "Tactical aerial reconnaissance platform optimized for long-range intelligence, surveillance, and target acquisition. It pairs directly with the QGC-Simulator to streamline mission planning and autonomous execution.",
+        specs: [
+          "Extended-endurance airframe engineered for wide-area tactical reconnaissance",
+          "Payload compartment designed to carry TMSI-sensor or CROW tactical modules",
+          "Direct digital twin integration with QGC-Simulator for mission risk reduction",
+          "Autonomous waypoint execution under partial or full communication blackout"
+        ],
+        tags: ["Fixed-Wing UAV", "Long-Range ISR", "Target Acquisition", "MAVLink", "Aerial Platform"]
+      },
+      {
+        id: "13",
+        name: "Fruitfly",
+        slug: "Fruitfly",
+        domain: "Autonomy & Sim",
+        role: "Bio-Inspired Connectome Flight Test",
+        platform: "Micro-SNN / Betaflight",
+        protocol: "Optical Flow / Rate Setpoints",
+        description: "Experimental bio-inspired project exploring whether a digitized fruit fly brain can autonomously pilot FPV drones. It investigates adapting insect neural pathways and visual reflexes into flight controls, testing whether biological wiring can handle high-speed navigation and obstacle avoidance without heavy computing hardware.",
+        specs: [
+          "Neural translation of Drosophila LPTC optical flow circuits into Betaflight rate setpoints",
+          "Sub-millisecond reflex response mimicking biological insect saccadic evasion",
+          "Spiking Neural Network (SNN) topology deployable on ultra-low-power microcontrollers",
+          "Bypasses heavy LiDAR and heavy SLAM pipelines for high-speed obstacle navigation"
+        ],
+        tags: ["Bio-Inspired AI", "Connectomics", "Drosophila Brain", "Neuromorphic Flight", "FPV Autonomy"]
+      }
+    ];
+
+    // State Variables
+    let currentDomain = "ALL";
+    let searchQuery = "";
+    let currentView = "grid"; // 'grid' or 'table'
+    let activeDrawerSystem = null;
+
+    // DOM Elements
+    const catalogGrid = document.getElementById("catalog-grid");
+    const catalogTableContainer = document.getElementById("catalog-table-container");
+    const catalogTableBody = document.getElementById("catalog-table-body");
+    const emptyState = document.getElementById("empty-state");
+    const categoryBar = document.getElementById("category-bar");
+    const searchInput = document.getElementById("search-input");
+    const filterCount = document.getElementById("filter-count");
+    const activeCategoryLabel = document.getElementById("active-category-label");
+    const viewGridBtn = document.getElementById("view-grid-btn");
+    const viewTableBtn = document.getElementById("view-table-btn");
+
+    // Drawer Elements
+    const drawer = document.getElementById("drawer");
+    const drawerBackdrop = document.getElementById("drawer-backdrop");
+    const drawerCloseBtn = document.getElementById("drawer-close-btn");
+    const drawerId = document.getElementById("drawer-id");
+    const drawerCategory = document.getElementById("drawer-category");
+    const drawerTitle = document.getElementById("drawer-title");
+    const drawerDesc = document.getElementById("drawer-desc");
+    const drawerSpecs = document.getElementById("drawer-specs");
+    const drawerPlatform = document.getElementById("drawer-platform");
+    const drawerProtocol = document.getElementById("drawer-protocol");
+    const drawerTags = document.getElementById("drawer-tags");
+    const drawerCloneCmd = document.getElementById("drawer-clone-cmd");
+    const drawerCopyBtn = document.getElementById("drawer-copy-btn");
+    const drawerExportBtn = document.getElementById("drawer-export-btn");
+    const drawerRepoBtn = document.getElementById("drawer-repo-btn");
+
+    // Toast
+    const toast = document.getElementById("toast");
+    const toastText = document.getElementById("toast-text");
+
+    // Live UTC Clock
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now.toISOString().substring(11, 19) + " UTC";
+      document.getElementById("utc-clock").textContent = timeStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Clipboard Helper
+    function copyToClipboard(text, confirmation) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand("copy");
+        showToast(confirmation || "Copied to clipboard.");
+      } catch (err) {
+        showToast("Clipboard copy failed.");
+      }
+      document.body.removeChild(textarea);
+    }
+
+    function showToast(message) {
+      toastText.textContent = message;
+      toast.classList.remove("translate-y-16", "opacity-0");
+      toast.classList.add("translate-y-0", "opacity-100");
+      setTimeout(() => {
+        toast.classList.remove("translate-y-0", "opacity-100");
+        toast.classList.add("translate-y-16", "opacity-0");
+      }, 2200);
+    }
+
+    // Categories Setup
+    const DOMAINS = ["ALL", "RF & EW", "C4ISR & Recon", "Alternative PNT", "Autonomy & Sim", "AI & OSINT"];
+
+    function renderCategoryButtons() {
+      categoryBar.innerHTML = "";
+      DOMAINS.forEach(dom => {
+        const count = dom === "ALL" 
+          ? REPOSITORIES.length 
+          : REPOSITORIES.filter(r => r.domain === dom).length;
+
+        const isSelected = currentDomain === dom;
+        const btn = document.createElement("button");
+        btn.className = `px-3 py-1.5 uppercase transition flex items-center space-x-1.5 ${
+          isSelected 
+            ? "bg-white text-black font-semibold" 
+            : "text-mono-400 hover:text-white hover:bg-mono-900"
+        }`;
+        btn.innerHTML = `
+          <span>${dom}</span>
+          <span class="text-[10px] ${isSelected ? "text-mono-800" : "text-mono-500"}">[${count}]</span>
+        `;
+        btn.addEventListener("click", () => {
+          currentDomain = dom;
+          activeCategoryLabel.textContent = dom === "ALL" ? "ALL DOMAINS" : dom.toUpperCase();
+          renderCategoryButtons();
+          renderCatalog();
+        });
+        categoryBar.appendChild(btn);
+      });
+    }
+
+    // Filter Logic
+    function getFilteredRepositories() {
+      const query = searchQuery.trim().toLowerCase();
+      return REPOSITORIES.filter(repo => {
+        const matchesDomain = (currentDomain === "ALL" || repo.domain === currentDomain);
+        const matchesQuery = !query ||
+          repo.name.toLowerCase().includes(query) ||
+          repo.description.toLowerCase().includes(query) ||
+          repo.role.toLowerCase().includes(query) ||
+          repo.platform.toLowerCase().includes(query) ||
+          repo.protocol.toLowerCase().includes(query) ||
+          repo.tags.some(t => t.toLowerCase().includes(query));
+        return matchesDomain && matchesQuery;
+      });
+    }
+
+    // Render Grid Cards
+    function renderGrid(items) {
+      catalogGrid.innerHTML = "";
+      items.forEach(repo => {
+        const card = document.createElement("article");
+        card.className = "system-card bg-mono-900/90 p-6 flex flex-col justify-between border-hairline";
+
+        const tagsHtml = repo.tags.slice(0, 3).map(tag => 
+          `<span class="px-2 py-0.5 border border-mono-800 text-mono-400 text-[10px] font-mono bg-mono-950">${tag}</span>`
+        ).join("");
+
+        card.innerHTML = `
+          <div>
+            <!-- Top Metadata Strip -->
+            <div class="flex items-center justify-between font-mono text-xs border-hairline-b pb-3 mb-4">
+              <span class="text-accent-orange font-semibold tracking-wider">#${repo.id}</span>
+              <span class="text-mono-400 uppercase text-[11px]">${repo.domain}</span>
+            </div>
+
+            <!-- Header and Function -->
+            <div class="mb-3">
+              <h3 class="text-lg font-semibold text-white tracking-tight font-sans flex items-center justify-between">
+                <span>${repo.name}</span>
+                <a href="https://github.com/piksliviksi/${repo.slug}" target="_blank" rel="noopener noreferrer" 
+                   title="Open on GitHub" 
+                   class="text-mono-500 hover:text-white p-1 transition">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                  </svg>
+                </a>
+              </h3>
+              <div class="text-[11px] font-mono text-mono-400 mt-0.5">${repo.role}</div>
+            </div>
+
+            <!-- Description -->
+            <p class="text-mono-300 text-xs font-sans leading-relaxed line-clamp-3 mb-4">
+              ${repo.description}
+            </p>
+          </div>
+
+          <!-- Bottom Telemetry & Inspect Trigger -->
+          <div class="border-hairline-t pt-4 mt-2">
+            <div class="flex flex-wrap gap-1 mb-4">
+              ${tagsHtml}
+            </div>
+
+            <div class="flex items-center justify-between font-mono text-xs pt-1">
+              <button onclick="openDrawer('${repo.id}')" 
+                      class="text-mono-200 hover:text-white hover:underline flex items-center space-x-1 uppercase text-[11px]">
+                <span>VIEW SPECIFICATION</span>
+                <span class="text-mono-500">→</span>
+              </button>
+              <a href="https://github.com/piksliviksi/${repo.slug}" target="_blank" rel="noopener noreferrer"
+                 class="text-mono-400 hover:text-mono-200 text-[11px] uppercase">
+                SOURCE [↗]
+              </a>
+            </div>
+          </div>
+        `;
+        catalogGrid.appendChild(card);
+      });
+    }
+
+    // Render Matrix / Table
+    function renderTable(items) {
+      catalogTableBody.innerHTML = "";
+      items.forEach(repo => {
+        const row = document.createElement("tr");
+        row.className = "hover:bg-mono-900 transition-colors";
+        row.innerHTML = `
+          <td class="p-3 text-center text-accent-orange font-mono font-semibold">${repo.id}</td>
+          <td class="p-3 font-semibold text-white">
+            <a href="https://github.com/piksliviksi/${repo.slug}" target="_blank" class="hover:underline flex items-center space-x-1.5">
+              <span>${repo.name}</span>
+            </a>
+            <div class="text-[10px] text-mono-500 font-normal">${repo.role}</div>
+          </td>
+          <td class="p-3 text-mono-400">${repo.domain}</td>
+          <td class="p-3 text-mono-300 font-sans text-xs max-w-md">${repo.description}</td>
+          <td class="p-3 text-mono-400 text-[11px]">
+            <div>${repo.platform}</div>
+            <div class="text-mono-500 text-[10px]">${repo.protocol}</div>
+          </td>
+          <td class="p-3 text-right">
+            <button onclick="openDrawer('${repo.id}')" class="px-2.5 py-1 border border-mono-700 hover:border-mono-300 text-mono-300 hover:text-white text-[10px] uppercase">
+              SPEC
+            </button>
+          </td>
+        `;
+        catalogTableBody.appendChild(row);
+      });
+    }
+
+    // Unified Render Dispatcher
+    function renderCatalog() {
+      const items = getFilteredRepositories();
+      filterCount.textContent = items.length;
+
+      if (items.length === 0) {
+        catalogGrid.classList.add("hidden");
+        catalogTableContainer.classList.add("hidden");
+        emptyState.classList.remove("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+
+      if (currentView === "grid") {
+        catalogGrid.classList.remove("hidden");
+        catalogTableContainer.classList.add("hidden");
+        renderGrid(items);
+      } else {
+        catalogGrid.classList.add("hidden");
+        catalogTableContainer.classList.remove("hidden");
+        renderTable(items);
+      }
+    }
+
+    // Drawer Management
+    window.openDrawer = function(id) {
+      const repo = REPOSITORIES.find(r => r.id === id);
+      if (!repo) return;
+      activeDrawerSystem = repo;
+
+      drawerId.textContent = `SYS_${repo.id}`;
+      drawerCategory.textContent = repo.domain;
+      drawerTitle.textContent = repo.name;
+      drawerDesc.textContent = repo.description;
+      drawerPlatform.textContent = repo.platform;
+      drawerProtocol.textContent = repo.protocol;
+      drawerRepoBtn.href = `https://github.com/piksliviksi/${repo.slug}`;
+      drawerCloneCmd.textContent = `git clone https://github.com/piksliviksi/${repo.slug}.git`;
+
+      // Render specs list
+      drawerSpecs.innerHTML = repo.specs.map(s => 
+        `<li class="flex items-start space-x-2">
+          <span class="text-mono-500 font-mono select-none">&bull;</span>
+          <span class="leading-relaxed font-sans text-xs">${s}</span>
+        </li>`
+      ).join("");
+
+      // Render tags
+      drawerTags.innerHTML = repo.tags.map(t => 
+        `<span class="px-2 py-1 border border-mono-700 bg-mono-900 text-mono-300 text-[10px] font-mono">${t}</span>`
+      ).join("");
+
+      drawer.classList.remove("translate-x-full");
+      drawerBackdrop.classList.remove("hidden");
+      document.body.classList.add("overflow-hidden");
+    };
+
+    function closeDrawer() {
+      drawer.classList.add("translate-x-full");
+      drawerBackdrop.classList.add("hidden");
+      document.body.classList.remove("overflow-hidden");
+      activeDrawerSystem = null;
+    }
+
+    drawerCloseBtn.addEventListener("click", closeDrawer);
+    drawerBackdrop.addEventListener("click", closeDrawer);
+
+    // Copy Drawer Clone Command
+    drawerCopyBtn.addEventListener("click", () => {
+      if (activeDrawerSystem) {
+        copyToClipboard(
+          `git clone https://github.com/piksliviksi/${activeDrawerSystem.slug}.git`,
+          `Git clone command copied for ${activeDrawerSystem.name}`
+        );
+      }
+    });
+
+    // Copy Full Brief
+    drawerExportBtn.addEventListener("click", () => {
+      if (!activeDrawerSystem) return;
+      const text = `[SYSTEM ${activeDrawerSystem.id}] ${activeDrawerSystem.name}\n` +
+                   `Domain: ${activeDrawerSystem.domain} | Platform: ${activeDrawerSystem.platform}\n` +
+                   `Repository: https://github.com/piksliviksi/${activeDrawerSystem.slug}\n\n` +
+                   `Description:\n${activeDrawerSystem.description}\n\n` +
+                   `Capabilities:\n${activeDrawerSystem.specs.map(s => "- " + s).join("\n")}\n\n` +
+                   `Tags: ${activeDrawerSystem.tags.join(", ")}`;
+      copyToClipboard(text, `Technical brief for ${activeDrawerSystem.name} copied.`);
+    });
+
+    // View Toggles
+    viewGridBtn.addEventListener("click", () => {
+      currentView = "grid";
+      viewGridBtn.className = "px-2.5 py-1 text-[11px] bg-mono-800 text-white font-mono flex items-center space-x-1 transition";
+      viewTableBtn.className = "px-2.5 py-1 text-[11px] text-mono-400 hover:text-white font-mono flex items-center space-x-1 transition";
+      renderCatalog();
+    });
+
+    viewTableBtn.addEventListener("click", () => {
+      currentView = "table";
+      viewTableBtn.className = "px-2.5 py-1 text-[11px] bg-mono-800 text-white font-mono flex items-center space-x-1 transition";
+      viewGridBtn.className = "px-2.5 py-1 text-[11px] text-mono-400 hover:text-white font-mono flex items-center space-x-1 transition";
+      renderCatalog();
+    });
+
+    // Search Input Listener
+    searchInput.addEventListener("input", (e) => {
+      searchQuery = e.target.value;
+      renderCatalog();
+    });
+
+    // Reset Filters
+    window.resetFilters = function() {
+      searchQuery = "";
+      searchInput.value = "";
+      currentDomain = "ALL";
+      activeCategoryLabel.textContent = "ALL DOMAINS";
+      renderCategoryButtons();
+      renderCatalog();
+    };
+
+    // Keyboard Shortcuts (/ to focus search, Escape to close drawer or reset search)
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "/" && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput.focus();
+      } else if (e.key === "Escape") {
+        if (!drawer.classList.contains("translate-x-full")) {
+          closeDrawer();
+        } else if (searchInput === document.activeElement) {
+          searchInput.blur();
+        } else if (searchQuery) {
+          resetFilters();
+        }
+      }
+    });
+
+    // Initial Execution
+    renderCategoryButtons();
+    renderCatalog();
+  </script>
+</body>
+</html>
