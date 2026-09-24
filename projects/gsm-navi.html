@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GSM-NAVI // Terrestrial Cellular Multi-Mast Navigation System - piksliviksi</title>
+  
+  <!-- Tailwind CSS Engine -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+          },
+          colors: {
+            mono: {
+              950: '#07080a',
+              900: '#0c0e12',
+              850: '#111419',
+              800: '#181c23',
+              700: '#232832',
+              600: '#343b49',
+              500: '#525b6c',
+              400: '#7e889b',
+              300: '#b1b8c5',
+              200: '#dce0e7',
+              100: '#f1f3f7',
+              50: '#fafbfd'
+            },
+            accent: {
+              amber: '#f59e0b',
+              orange: '#f97316',
+              cyan: '#0ea5e9',
+              emerald: '#10b981',
+              zinc: '#e4e4e7'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * { border-radius: 0px !important; }
+    body {
+      background-color: #08090c;
+      color: #d1d5db;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .blueprint-grid {
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .border-hairline { border: 1px solid #1c2028; }
+    .border-hairline-t { border-top: 1px solid #1c2028; }
+    .border-hairline-b { border-bottom: 1px solid #1c2028; }
+    .border-hairline-l { border-left: 1px solid #1c2028; }
+    .border-hairline-r { border-right: 1px solid #1c2028; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #08090c; }
+    ::-webkit-scrollbar-thumb { background: #232832; }
+  </style>
+</head>
+
+<body class="blueprint-grid min-h-screen flex flex-col selection:bg-zinc-800 selection:text-white">
+
+  <!-- Top Header Navigation -->
+  <header class="border-hairline-b bg-mono-950/95 sticky top-0 z-30 backdrop-blur-sm">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-14 flex items-center justify-between gap-4">
+        
+        <!-- Breadcrumb & Identity -->
+        <div class="flex items-center space-x-3 text-xs font-mono">
+          <a href="../index.html" class="flex items-center space-x-2 text-white font-semibold uppercase hover:text-accent-orange transition-colors">
+            <span class="w-2.5 h-2.5 bg-accent-orange inline-block"></span>
+            <span>piksliviksi</span>
+          </a>
+          <span class="text-mono-600">/</span>
+          <a href="../index.html" class="text-mono-400 hover:text-white uppercase transition">Catalog</a>
+          <span class="text-mono-600">/</span>
+          <span class="text-accent-orange font-semibold">07_GSM-NAVI</span>
+        </div>
+
+        <!-- Back to Catalog Link -->
+        <div class="flex items-center space-x-4 font-mono text-xs">
+          <a href="../index.html" class="inline-flex items-center space-x-1.5 px-3 py-1.5 border border-mono-700 hover:border-mono-400 text-mono-200 hover:text-white bg-mono-900 transition text-xs font-mono">
+            <span>←</span>
+            <span>BACK TO CATALOG</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+    
+    <!-- Top System Identification Banner -->
+    <div class="border-hairline bg-mono-900/60 p-6 sm:p-8 mb-8">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-hairline-b pb-4 mb-6">
+        <div class="flex items-center space-x-3 font-mono text-xs">
+          <span class="px-2 py-0.5 bg-accent-orange text-black font-bold">SYS_07</span>
+          <span class="px-2 py-0.5 border border-mono-700 bg-mono-950 text-mono-300 uppercase">Alternative PNT</span>
+          <span class="px-2 py-0.5 border border-emerald-900/50 bg-emerald-950/20 text-emerald-400 uppercase text-[10px]">FIELD VALIDATED</span>
+        </div>
+        <div class="font-mono text-xs text-mono-500 uppercase tracking-widest hidden sm:block">
+          SOVEREIGN DEFENSE SPECIFICATION
+        </div>
+      </div>
+
+      <div class="max-w-4xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight font-sans mb-2">
+          GSM-NAVI
+        </h1>
+        <div class="text-sm sm:text-base font-mono text-accent-orange mb-4">
+          Terrestrial Cellular Multi-Mast Navigation System
+        </div>
+        <p class="text-mono-300 text-sm sm:text-base leading-relaxed font-sans mb-6">
+          GSM-NAVI is a terrestrial positioning unit that derives accurate geographic coordinates exclusively from ambient cellular base stations. Designed to keep vehicles, vessels, and unmanned systems on course when satellite navigation is jammed or spoofed, GSM-NAVI operates completely passively by cross-referencing visible tower signals against an offline geocoded base station database.
+        </p>
+
+        <!-- Fast Specs Telemetry Strip -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 font-mono text-xs pt-4 border-hairline-t">
+          <div>
+            <span class="text-mono-500 uppercase block text-[10px]">Operating Platform</span>
+            <span class="text-mono-200">Embedded ARM Controller / Industrial Cellular Frontend</span>
+          </div>
+          <div>
+            <span class="text-mono-500 uppercase block text-[10px]">Telemetry & Protocol</span>
+            <span class="text-mono-200">Downlink Cell Broadcast Sniffing / Offline Geodetic Trilateration</span>
+          </div>
+          <div>
+            <span class="text-mono-500 uppercase block text-[10px]">Access & Repository</span>
+            <span class="text-mono-400">Proprietary / Private Defense Repo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blueprint & Visual Architecture Showcase -->
+    <section class="border-hairline bg-mono-900/40 p-6 sm:p-8 mb-8">
+      <div class="flex items-center justify-between border-hairline-b pb-4 mb-6">
+        <div class="flex items-center space-x-2 text-mono-300 font-mono text-xs uppercase tracking-widest">
+          <span class="w-2.5 h-2.5 bg-accent-orange inline-block"></span>
+          <span>Technical Architecture Blueprint & Schematic</span>
+        </div>
+        <span class="font-mono text-[11px] text-mono-500">CLICK IMAGE TO ENLARGE</span>
+      </div>
+
+      <!-- Main Thumbnail Blueprint -->
+      <div class="relative group bg-mono-950 border-hairline overflow-hidden cursor-pointer" onclick="openModal('../images/GSM_NAVi.jpg')">
+        <img src="../images/GSM_NAVi.jpg" alt="GSM-NAVI Architectural Blueprint" 
+             class="w-full h-auto object-cover group-hover:scale-[1.01] transition-transform duration-300" />
+        <div class="absolute bottom-3 right-3 px-3 py-1.5 bg-mono-950/90 border border-mono-700 text-mono-200 font-mono text-xs flex items-center space-x-1.5 opacity-90 group-hover:opacity-100 transition">
+          <svg class="w-3.5 h-3.5 text-accent-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+          </svg>
+          <span>INSPECT HIGH-RES SCHEMATIC</span>
+        </div>
+      </div>
+
+      <!-- Blueprint Extraction Tags -->
+      <div class="mt-6 border-hairline-t pt-4">
+        <div class="text-mono-500 font-mono text-[10px] uppercase tracking-wider mb-2.5">
+          Verified Blueprint Capabilities & Callouts:
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-2.5 py-1 bg-mono-950 border border-mono-700 text-mono-300 font-mono text-[11px] inline-flex items-center space-x-1.5">
+              <span class="w-1.5 h-1.5 bg-accent-orange"></span>
+              <span>GSM-NAVI Unit: Terrestrial Navigation Active</span>
+            </span><span class="px-2.5 py-1 bg-mono-950 border border-mono-700 text-mono-300 font-mono text-[11px] inline-flex items-center space-x-1.5">
+              <span class="w-1.5 h-1.5 bg-accent-orange"></span>
+              <span>Cell ID (CID) & Multi-Mast Signal Strength (RSSI/RSRP)</span>
+            </span><span class="px-2.5 py-1 bg-mono-950 border border-mono-700 text-mono-300 font-mono text-[11px] inline-flex items-center space-x-1.5">
+              <span class="w-1.5 h-1.5 bg-accent-orange"></span>
+              <span>Autonomous Navigation Backup When GPS is Degraded or Denied</span>
+            </span><span class="px-2.5 py-1 bg-mono-950 border border-mono-700 text-mono-300 font-mono text-[11px] inline-flex items-center space-x-1.5">
+              <span class="w-1.5 h-1.5 bg-accent-orange"></span>
+              <span>Resilient Positioning & Multilateration Fix</span>
+            </span><span class="px-2.5 py-1 bg-mono-950 border border-mono-700 text-mono-300 font-mono text-[11px] inline-flex items-center space-x-1.5">
+              <span class="w-1.5 h-1.5 bg-accent-orange"></span>
+              <span>Offline Geocoded Base Station Registry (Estonia, Nordic & Eastern Europe)</span>
+            </span><span class="px-2.5 py-1 bg-mono-950 border border-mono-700 text-mono-300 font-mono text-[11px] inline-flex items-center space-x-1.5">
+              <span class="w-1.5 h-1.5 bg-accent-orange"></span>
+              <span>Rugged Vehicle & Airframe Mountable Form Factor</span>
+            </span>
+        </div>
+      </div>
+
+      
+    </section>
+
+    <!-- Deep Technical Information Sections (2-Column Grid) -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      
+      <!-- Column 1: What It Does -->
+      <section class="border-hairline bg-mono-900/50 p-6 sm:p-8">
+        <div class="flex items-center space-x-2 text-mono-300 font-mono text-xs uppercase tracking-widest border-hairline-b pb-3 mb-6">
+          <span class="w-2 h-2 bg-accent-orange inline-block"></span>
+          <span>Operational Capabilities // What It Does</span>
+        </div>
+        <ul class="space-y-4">
+          <li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans">
+              <span class="text-accent-orange font-mono select-none font-bold mt-0.5">■</span>
+              <span>Provides reliable ground and aerial navigation backup when GNSS signals are degraded, jammed, or spoofed.</span>
+            </li><li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans">
+              <span class="text-accent-orange font-mono select-none font-bold mt-0.5">■</span>
+              <span>Operates without emitting radio signals, eliminating the risk of electronic detection or counter-battery locating.</span>
+            </li><li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans">
+              <span class="text-accent-orange font-mono select-none font-bold mt-0.5">■</span>
+              <span>Cross-references ambient base station broadcast telemetry against pre-compiled regional cell tower databases (including Estonia, Nordic, and Eastern Europe via RUcell).</span>
+            </li><li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans">
+              <span class="text-accent-orange font-mono select-none font-bold mt-0.5">■</span>
+              <span>Calculates continuous position fixes and estimated error ellipses without requiring cellular network connectivity or data subscription SIM cards.</span>
+            </li>
+        </ul>
+      </section>
+
+      <!-- Column 2: How It Works -->
+      <section class="border-hairline bg-mono-900/50 p-6 sm:p-8">
+        <div class="flex items-center space-x-2 text-mono-300 font-mono text-xs uppercase tracking-widest border-hairline-b pb-3 mb-6">
+          <span class="w-2 h-2 bg-accent-cyan inline-block"></span>
+          <span>Technical Architecture // How It Works</span>
+        </div>
+        <ul class="space-y-4">
+          <li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans">
+              <span class="text-accent-cyan font-mono select-none font-bold mt-0.5">▶</span>
+              <div>**Passive Broadcast Ingestion**: Scans cellular downlink channels across 2G, 3G, 4G, and LTE bands. Decodes broadcast system information blocks containing Cell ID (CID), Local Area Code (LAC), Mobile Network Code (MNC), and Mobile Country Code (MCC).</div>
+            </li><li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans">
+              <span class="text-accent-cyan font-mono select-none font-bold mt-0.5">▶</span>
+              <div>**Signal Strength Profiling**: Gathers multi-tower signal parameters including Received Signal Strength Indicator (RSSI), Reference Signal Received Power (RSRP), and Reference Signal Received Quality (RSRQ) from multiple neighboring masts simultaneously.</div>
+            </li><li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans">
+              <span class="text-accent-cyan font-mono select-none font-bold mt-0.5">▶</span>
+              <div>**Offline Geodetic Database Lookup**: Queries an onboard, compressed spatial SQLite database storing millions of pre-surveyed cellular mast locations, heights, and antenna radiation patterns.</div>
+            </li><li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans">
+              <span class="text-accent-cyan font-mono select-none font-bold mt-0.5">▶</span>
+              <div>**Weighted Multilateration Algorithm**: Applies an iterative non-linear weighted least-squares solver incorporating empirical RF propagation path-loss models (Hata/Okumura) to derive a position fix and bounding uncertainty ellipse.</div>
+            </li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- Hardware & Software Specs (2-Column Grid) -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      
+      <!-- Hardware Suite -->
+      <section class="border-hairline bg-mono-900/50 p-6 sm:p-8">
+        <div class="flex items-center space-x-2 text-mono-300 font-mono text-xs uppercase tracking-widest border-hairline-b pb-3 mb-6">
+          <span class="w-2 h-2 bg-accent-orange inline-block"></span>
+          <span>Hardware & Sensor Suite Specifications</span>
+        </div>
+        <div class="grid grid-cols-1 gap-3">
+          <div class="border-hairline p-4 bg-mono-900/60">
+              <span class="text-accent-orange font-mono text-xs block mb-1 font-semibold">Cellular Radio Frontend</span>
+              <span class="text-mono-200 text-xs font-sans leading-relaxed">Quectel / Telit industrial multi-band cellular module with diagnostic raw-scan AT firmware</span>
+            </div><div class="border-hairline p-4 bg-mono-900/60">
+              <span class="text-accent-orange font-mono text-xs block mb-1 font-semibold">Embedded Controller</span>
+              <span class="text-mono-200 text-xs font-sans leading-relaxed">Raspberry Pi Compute Module 4 / Cortex-M7 embedded controller</span>
+            </div><div class="border-hairline p-4 bg-mono-900/60">
+              <span class="text-accent-orange font-mono text-xs block mb-1 font-semibold">Antenna</span>
+              <span class="text-mono-200 text-xs font-sans leading-relaxed">Multi-band wideband omnidirectional low-profile puck antenna with high out-of-band rejection</span>
+            </div><div class="border-hairline p-4 bg-mono-900/60">
+              <span class="text-accent-orange font-mono text-xs block mb-1 font-semibold">Interfaces</span>
+              <span class="text-mono-200 text-xs font-sans leading-relaxed">Dual isolated CAN bus (UAVCAN / DroneCAN) and RS-422/UART serial ports</span>
+            </div><div class="border-hairline p-4 bg-mono-900/60">
+              <span class="text-accent-orange font-mono text-xs block mb-1 font-semibold">Enclosure</span>
+              <span class="text-mono-200 text-xs font-sans leading-relaxed">IP67-rated CNC aluminum chassis with MIL-STD-810H vibration and thermal hardening</span>
+            </div>
+        </div>
+      </section>
+
+      <!-- Software & Protocols -->
+      <section class="border-hairline bg-mono-900/50 p-6 sm:p-8">
+        <div class="flex items-center space-x-2 text-mono-300 font-mono text-xs uppercase tracking-widest border-hairline-b pb-3 mb-6">
+          <span class="w-2 h-2 bg-accent-cyan inline-block"></span>
+          <span>Software Stack & Telemetry Protocols</span>
+        </div>
+        <div class="grid grid-cols-1 gap-3">
+          <div class="border-hairline p-4 bg-mono-900/60">
+              <span class="text-accent-cyan font-mono text-xs block mb-1 font-semibold">Database</span>
+              <span class="text-mono-200 text-xs font-sans leading-relaxed">Spatialite / SQLite embedded geocoded tower registry with R-tree spatial indexing</span>
+            </div><div class="border-hairline p-4 bg-mono-900/60">
+              <span class="text-accent-cyan font-mono text-xs block mb-1 font-semibold">Solver</span>
+              <span class="text-mono-200 text-xs font-sans leading-relaxed">C++ non-linear multilateration engine with Levenberg-Marquardt optimization</span>
+            </div><div class="border-hairline p-4 bg-mono-900/60">
+              <span class="text-accent-cyan font-mono text-xs block mb-1 font-semibold">Autopilot Link</span>
+              <span class="text-mono-200 text-xs font-sans leading-relaxed">DroneCAN / NMEA output sentence streaming at 5-10 Hz</span>
+            </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Bottom Navigation Bar (Prev / Next) -->
+    <nav class="border-hairline bg-mono-950 p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
+      <a href="spoofgrid.html" class="inline-flex items-center space-x-2 text-mono-400 hover:text-white transition">
+        <span>←</span>
+        <span>PREVIOUS: SpoofGrid (#06)</span>
+      </a>
+
+      <a href="../index.html" class="px-4 py-2 border border-mono-700 bg-mono-900 text-mono-200 hover:text-white hover:border-mono-400 transition">
+        CATALOG OVERVIEW
+      </a>
+
+      <a href="qgc-simulator.html" class="inline-flex items-center space-x-2 text-mono-400 hover:text-white transition">
+        <span>NEXT: QGC-Simulator (#08)</span>
+        <span>→</span>
+      </a>
+    </nav>
+  </main>
+
+  <!-- Fullscreen Image Inspection Modal -->
+  <div id="image-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4" onclick="closeModal()">
+    <div class="relative max-w-7xl max-h-[95vh] w-full flex flex-col items-center" onclick="event.stopPropagation()">
+      <div class="w-full flex items-center justify-between pb-3 text-mono-400 font-mono text-xs">
+        <span id="modal-title">GSM-NAVI Blueprint Inspection</span>
+        <button onclick="closeModal()" class="px-3 py-1 border border-mono-700 hover:border-white text-white bg-mono-900">
+          CLOSE [ESC]
+        </button>
+      </div>
+      <img id="modal-img" src="" alt="High resolution preview" class="max-h-[85vh] w-auto object-contain border-hairline shadow-2xl" />
+    </div>
+  </div>
+
+  <!-- Minimalist Footer -->
+  <footer class="border-hairline-t bg-mono-950 font-mono text-xs text-mono-500 mt-auto">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <span class="w-1.5 h-1.5 bg-mono-600 inline-block"></span>
+        <span class="text-mono-400">AUTHOR: piksliviksi</span>
+        <span class="text-mono-700">|</span>
+        <span>DEFENSE, EW &amp; AUTONOMOUS SYSTEMS</span>
+      </div>
+      <div>
+        <a href="https://github.com/piksliviksi" target="_blank" class="hover:text-mono-300 transition">github.com/piksliviksi</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function openModal(src) {
+      document.getElementById('modal-img').src = src;
+      const modal = document.getElementById('image-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('image-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>

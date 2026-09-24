@@ -82,7 +82,7 @@
 
     /* Interactive item hover */
     .system-card {
-      transition: background-color 140ms ease, border-color 140ms ease;
+      transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
     }
     .system-card:hover {
       background-color: #101318;
@@ -115,18 +115,18 @@
         
         <!-- Identity Branding -->
         <div class="flex items-center space-x-4">
-          <a href="#" class="flex items-center space-x-2.5 text-white tracking-widest font-mono text-sm font-semibold uppercase hover:text-accent-orange transition-colors">
+          <a href="index.html" class="flex items-center space-x-2.5 text-white tracking-widest font-mono text-sm font-semibold uppercase hover:text-accent-orange transition-colors">
             <span class="w-2.5 h-2.5 bg-accent-orange inline-block"></span>
             <span>piksliviksi</span>
           </a>
           <span class="text-mono-700 hidden sm:inline">/</span>
-          <span class="text-mono-400 font-mono text-xs uppercase tracking-wider hidden sm:inline">Engineering Catalog</span>
+          <span class="text-mono-400 font-mono text-xs uppercase tracking-wider hidden sm:inline">Defense &amp; Systems Catalog</span>
         </div>
 
         <!-- Right System Indicators & External Link -->
         <div class="flex items-center space-x-4 font-mono text-xs">
           <div class="hidden md:flex items-center space-x-3 text-mono-400 border-hairline-r pr-4">
-            <span>INDEX: 13 REPOSITORIES</span>
+            <span>INDEX: 13 SYSTEMS</span>
             <span class="text-mono-700">•</span>
             <span id="utc-clock">00:00:00 UTC</span>
           </div>
@@ -153,7 +153,7 @@
       <div class="max-w-4xl">
         <div class="flex items-center space-x-2 text-mono-400 font-mono text-xs uppercase tracking-widest mb-3">
           <span class="w-2 h-0.5 bg-mono-400 inline-block"></span>
-          <span>Technical Portfolio & System Specs</span>
+          <span>Technical Portfolio &amp; System Specifications</span>
         </div>
         
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-tight">
@@ -161,27 +161,27 @@
         </h1>
         
         <p class="mt-4 text-mono-300 text-sm sm:text-base leading-relaxed font-normal max-w-3xl">
-          An engineering catalog spanning passive RF interception, SDR counter-UAS suites, tactical C4ISR sensor fusion, resilient alternative PNT, and privacy-governed AI architectures. Designed for high survivability in electronic warfare and GPS-denied environments.
+          An engineering catalog spanning passive RF interception, mobile passive radar, SDR counter-UAS suites, tactical C4ISR sensor fusion, resilient alternative PNT, and sovereign AI architectures. Designed for high survivability in electronic warfare and GPS-denied environments.
         </p>
       </div>
 
       <!-- Quick Metrics Strip -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-mono-800 border-hairline mt-8 font-mono text-xs">
         <div class="bg-mono-900 p-4">
-          <div class="text-mono-500 uppercase">Active Units</div>
+          <div class="text-mono-500 uppercase">Documented Systems</div>
           <div class="text-xl font-semibold text-white mt-1" id="stat-total">13</div>
         </div>
         <div class="bg-mono-900 p-4">
-          <div class="text-mono-500 uppercase">Domain Clusters</div>
+          <div class="text-mono-500 uppercase">Core Domains</div>
           <div class="text-xl font-semibold text-white mt-1">05</div>
         </div>
         <div class="bg-mono-900 p-4">
           <div class="text-mono-500 uppercase">Primary Stack</div>
-          <div class="text-xl font-semibold text-mono-200 mt-1">SDR / C4ISR / AI</div>
+          <div class="text-xl font-semibold text-mono-200 mt-1">SDR / ALT-PNT / C4ISR</div>
         </div>
         <div class="bg-mono-900 p-4">
-          <div class="text-mono-500 uppercase">Environment</div>
-          <div class="text-xl font-semibold text-accent-orange mt-1">CONTESTED RF</div>
+          <div class="text-mono-500 uppercase">Deployment Target</div>
+          <div class="text-xl font-semibold text-accent-orange mt-1">CONTESTED RF &amp; EW</div>
         </div>
       </div>
     </section>
@@ -203,7 +203,7 @@
           <input 
             type="text" 
             id="search-input"
-            placeholder="Search system, protocol, frequency, or hardware..."
+            placeholder="Search system, hardware, protocol, or tag..."
             class="w-full bg-mono-900 border border-mono-700 focus:border-mono-200 pl-8 pr-16 py-2 text-xs text-white placeholder-mono-500 font-mono focus:outline-none transition-colors"
           />
           <div class="absolute inset-y-0 right-0 pr-2 flex items-center space-x-1 pointer-events-none text-[10px] font-mono text-mono-500">
@@ -248,8 +248,8 @@
             <th class="p-3 w-48">SYSTEM NAME</th>
             <th class="p-3 w-40">DOMAIN</th>
             <th class="p-3">TECHNICAL SUMMARY</th>
-            <th class="p-3 w-48">HARDWARE / PROTOCOL</th>
-            <th class="p-3 w-32 text-right">ACTIONS</th>
+            <th class="p-3 w-52">HARDWARE &amp; PROTOCOL</th>
+            <th class="p-3 w-36 text-right">SPECIFICATION</th>
           </tr>
         </thead>
         <tbody id="catalog-table-body" class="divide-y divide-mono-800">
@@ -280,6 +280,7 @@
           <span id="drawer-category" class="text-mono-200">DOMAIN</span>
         </div>
         <h2 id="drawer-title" class="text-xl font-semibold text-white tracking-tight font-sans">System Specification</h2>
+        <div id="drawer-role" class="text-xs text-accent-orange font-mono mt-0.5">Role</div>
       </div>
 
       <button id="drawer-close-btn" class="p-2 border border-mono-700 hover:border-mono-400 text-mono-400 hover:text-white transition">
@@ -292,10 +293,19 @@
     <!-- Drawer Body / Technical Dossier -->
     <div class="p-6 overflow-y-auto space-y-6 flex-grow text-xs">
       
+      <!-- Blueprint Image Preview in Drawer -->
+      <div class="border-hairline bg-mono-900 p-2">
+        <img id="drawer-image" src="" alt="System Blueprint Preview" class="w-full h-44 object-cover border-hairline mb-2" />
+        <div class="flex items-center justify-between text-[10px] text-mono-400 px-1 font-mono">
+          <span>BLUEPRINT SCHEMATIC</span>
+          <span class="text-accent-orange uppercase">HIGH-RES AVAILABLE IN SPEC</span>
+        </div>
+      </div>
+
       <!-- Primary Mission Scope -->
       <div>
-        <div class="text-[10px] text-mono-500 uppercase tracking-widest mb-1.5">Operational Mission</div>
-        <p id="drawer-desc" class="text-mono-200 font-sans text-sm leading-relaxed bg-mono-900 p-4 border border-mono-800"></p>
+        <div class="text-[10px] text-mono-500 uppercase tracking-widest mb-1.5">Operational Mission &amp; Capability</div>
+        <p id="drawer-desc" class="text-mono-200 font-sans text-xs leading-relaxed bg-mono-900 p-4 border border-mono-800"></p>
       </div>
 
       <!-- Architecture Specifications -->
@@ -309,7 +319,7 @@
       <!-- Target Hardware & Integration Stack -->
       <div class="grid grid-cols-2 gap-2 text-[11px]">
         <div class="border-hairline p-3 bg-mono-900/60">
-          <div class="text-mono-500 text-[10px] uppercase">Execution Platform</div>
+          <div class="text-mono-500 text-[10px] uppercase">Execution Platform / Hardware</div>
           <div id="drawer-platform" class="text-white mt-1 font-semibold">Target Hardware</div>
         </div>
         <div class="border-hairline p-3 bg-mono-900/60">
@@ -326,14 +336,15 @@
         </div>
       </div>
 
-      <!-- Terminal Git Clone Command -->
+      <!-- Proprietary Status Notice -->
       <div>
-        <div class="text-[10px] text-mono-500 uppercase tracking-widest mb-2">Git Remote Clone</div>
-        <div class="flex items-center border border-mono-700 bg-mono-900">
-          <code id="drawer-clone-cmd" class="px-3 py-2 text-mono-300 flex-grow text-[11px] overflow-x-auto select-all">git clone https://github.com/piksliviksi/...</code>
-          <button id="drawer-copy-btn" class="px-3 py-2 border-hairline-l hover:bg-mono-800 text-mono-400 hover:text-white transition uppercase text-[10px]">
-            COPY
-          </button>
+        <div class="text-[10px] text-mono-500 uppercase tracking-widest mb-2">Repository &amp; Intellectual Property Status</div>
+        <div class="p-3 border border-mono-800 bg-mono-900/80 text-mono-300 flex items-center justify-between text-[11px]">
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 bg-accent-orange"></span>
+            <span>Proprietary Defense Repository (Private)</span>
+          </div>
+          <span class="text-mono-500 text-[10px] uppercase">[AIR-GAPPED COMPLIANT]</span>
         </div>
       </div>
     </div>
@@ -344,11 +355,11 @@
         COPY BRIEF
       </button>
 
-      <a id="drawer-repo-btn" href="#" target="_blank" rel="noopener noreferrer" 
-         class="px-4 py-2 bg-white hover:bg-mono-200 text-black font-semibold text-xs transition flex items-center space-x-1.5">
-        <span>VIEW REPOSITORY</span>
+      <a id="drawer-page-btn" href="#" 
+         class="px-4 py-2 bg-accent-orange hover:bg-orange-500 text-black font-semibold text-xs transition flex items-center space-x-1.5">
+        <span>OPEN FULL PROJECT PAGE</span>
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
         </svg>
       </a>
     </div>
@@ -374,7 +385,7 @@
     </div>
   </footer>
 
-  <!-- Notification Toast (Squared, Minimal) -->
+  <!-- Notification Toast -->
   <div id="toast" class="fixed bottom-4 right-4 z-50 transform translate-y-16 opacity-0 transition-all duration-200 pointer-events-none">
     <div class="px-4 py-2 bg-mono-900 border border-mono-600 text-mono-100 font-mono text-xs shadow-2xl flex items-center space-x-2">
       <span class="w-1.5 h-1.5 bg-accent-orange inline-block"></span>
@@ -383,243 +394,250 @@
   </div>
 
   <script>
-    // Complete 13 Repository Systems Specification
+    // Complete 13 Repository Systems Specification with High-Res Images & Dedicated Project Pages
     const REPOSITORIES = [
       {
         id: "01",
-        name: "Kratt",
-        slug: "Kratt",
-        domain: "AI & OSINT",
-        role: "Market Intelligence Engine",
-        platform: "Containerized / Air-Gapped",
-        protocol: "Event Stream / REST",
-        description: "AI-driven market intelligence platform designed for monitoring cryptocurrency and equities. It analyzes market trends, asset momentum, and sentiment data to generate automated, actionable trading insights.",
+        name: "HUGINN",
+        slug: "huginn",
+        domain: "Alternative PNT",
+        role: "Autonomous GPS-Denied UAV Navigation & Sensor Fusion System",
+        platform: "Jetson AGX Orin / Pi Zero 2W / Pixhawk PX4",
+        protocol: "MAVLink (VISION_POSITION_ESTIMATE) / DVB-T2 / LTE",
+        image: "images/huginn.jpg",
+        description: "Autonomous navigation system for tactical UAVs operating in GPS-denied environments. Uses DVB-T2 pseudoranges, LTE cell tower triangulation, TERCOM terrain matching, and DSMAC visual correlation to maintain precision position when satellite navigation is jammed or spoofed.",
         specs: [
-          "Streaming financial order book and sentiment ingestion pipelines",
-          "Automated momentum tracking and multi-indicator anomaly scoring",
-          "Autonomous quantitative modeling decoupled from commercial SaaS feeds",
-          "Lightweight deployment profile capable of sovereign local execution"
+            "DVB-T2 pseudoranges via Airspy Mini utilizing MUSIC algorithm and Gauss-Newton solver",
+            "Terrestrial LTE base-station triangulation matched against local geocoded tower database",
+            "TERCOM terrain elevation matching and DSMAC optical scene correlation",
+            "Direct 8-state EKF fusion streamed as VISION_POSITION_ESTIMATE into PX4 EKF2"
         ],
-        tags: ["AI/ML", "Quantitative Intelligence", "Market Trends", "Sentiment Analysis", "Python"]
+        tags: ["Alternative PNT", "GPS-Denied", "DVB-T2", "TERCOM", "DSMAC", "PX4 EKF2", "Jetson Orin"]
       },
       {
         id: "02",
-        name: "TMSI-sensor",
-        slug: "TMSI-sensor",
+        name: "CROW",
+        slug: "crow",
         domain: "RF & EW",
-        role: "Passive Airborne SIGINT Sensor",
-        platform: "Raspberry Pi Zero 2W",
-        protocol: "LTE Uplink / Kismet API",
-        description: "Airborne passive radio frequency sensor built on a Raspberry Pi Zero 2W. It captures cellular identifiers (TMSI/IMSI) alongside Wi-Fi and Bluetooth traffic, pairing localized coordinates with an LTE uplink to stream live signals data into Kismet.",
+        role: "Ground-Based Mobile Passive Radar System",
+        platform: "Tactical 4x4 / Mobile Telescopic Mast / Ruggedized Workstation",
+        protocol: "Phase-Coherent IQ Streaming / Gigabit Optical Link",
+        image: "images/CROW.jpg",
+        description: "Covert, non-radiating airspace and surface surveillance radar that detects, tracks, and classifies moving airborne targets without emitting RF signals. Exploits ambient civilian FM, DVB-T, and cellular broadcasts to operate in complete electromagnetic silence.",
         specs: [
-          "Passive GSM TMSI and IMSI logging without localized RF transmission",
-          "Simultaneous dual-band 802.11 Wi-Fi and Bluetooth BLE beacon observation",
-          "Direct integration with Kismet logging servers through cellular telemetry backhaul",
-          "Minimal SWaP-C profile engineered specifically for sub-250g aerial scouts"
+            "Ambient emitter reception (FM, DVB-T2, 4G/5G) for zero-emission covert surveillance",
+            "Dual-channel architecture with dedicated reference receiver and phased surveillance array",
+            "Extensive Cancellation Algorithm (ECA) for high-power direct-path and clutter suppression",
+            "GPU-accelerated Cross-Ambiguity Function (CAF) for 2D Range-Doppler target extraction"
         ],
-        tags: ["Passive SIGINT", "TMSI/IMSI", "Pi Zero 2W", "Kismet", "Cellular", "LTE Uplink"]
+        tags: ["Passive Radar", "Bistatic Radar", "RF & EW", "Counter-UAS", "Doppler Signature", "Zero-Emission"]
       },
       {
         id: "03",
-        name: "PlutoSky",
-        slug: "PlutoSky",
-        domain: "RF & EW",
-        role: "Counter-UAS SDR Detector / Jammer",
-        platform: "ADALM-Pluto SDR / x86",
-        protocol: "Direct RF Synthesizer",
-        description: "Portable Software-Defined Radio (SDR) platform engineered to detect, monitor, and counter First-Person View (FPV) drones and ExpressLRS (ELRS) control links. It provides localized tactical airspace awareness and targeted RF jamming capabilities.",
+        name: "Fruitfly",
+        slug: "fruitfly",
+        domain: "Autonomy & Sim",
+        role: "Bio-Inspired Neuromorphic Autopilot",
+        platform: "Custom FPV Racing Airframe / Neuromorphic SBC / Unity SIM",
+        protocol: "Lock-step UDP Physics Bridge / Betaflight Serial Telemetry",
+        image: "images/13_fruitfly.jpg",
+        description: "Experimental bio-inspired autopilot that flies racing drones using a digitized spiking neural model of the Drosophila melanogaster male central nervous system (Janelia FlyEM MaleCNS v1.0). Replicates biological visual reflexes for ultra-fast obstacle avoidance without deep neural networks.",
         specs: [
-          "Fast spectral scanning across 868MHz, 915MHz, and 2.4GHz ELRS hopping bands",
-          "Automatic detection and visual waterfall alert for analog 5.8GHz video transmissions",
-          "SDR-synthesized selective RF suppression against adversarial FPV links",
-          "Designed for portable field kits utilizing ADALM-Pluto transceivers"
+            "Twin compound-eye optical cameras feeding Reichardt elementary motion detectors",
+            "Poisson spike ingestion into connectome visual neurons (HS, VS, LPLC2, LC4, LC10/11)",
+            "Biological Leaky Integrate-and-Fire (LIF) network simulating 0.5ms synaptic events",
+            "Trained linear DAgger readout mapping descending motor spikes directly to drone flight sticks"
+        ],
+        tags: ["Neuromorphic", "Bio-Inspired", "Autonomy", "Connectome", "FPV Drone", "Spiking SNN"]
+      },
+      {
+        id: "04",
+        name: "TMSI-sensor",
+        slug: "tmsi-sensor",
+        domain: "RF & EW",
+        role: "Airborne Passive Cellular & RF Reconnaissance Sensor",
+        platform: "Raspberry Pi Zero 2W / RTL-SDR / Micro-UAV Payload",
+        protocol: "GSM Paging Decode / LTE Uplink / Kismet Remote Capture",
+        image: "images/TMSI.jpg",
+        description: "Airborne passive radio frequency intelligence (SIGINT) sensor engineered for sub-250g aerial scouts (160g total weight). Captures cellular TMSI/IMSI identifiers, Wi-Fi probe requests, and Bluetooth advertisements, georeferencing detections with GPS and relaying live data over LTE to Kismet.",
+        specs: [
+            "Passive GSM900/850 TMSI and IMSI logging without localized RF transmission",
+            "Simultaneous dual-band 802.11 Wi-Fi probe sniffing and Bluetooth BLE beacon observation",
+            "GPS UART coordinate tagging enriching every RF intercept at millisecond resolution",
+            "Live telemetry backhaul over LTE modem directly into central ground Kismet server"
+        ],
+        tags: ["Passive SIGINT", "TMSI/IMSI", "Pi Zero 2W", "Kismet", "Cellular", "LTE Uplink", "Sub-250g"]
+      },
+      {
+        id: "05",
+        name: "PlutoSky",
+        slug: "plutosky",
+        domain: "RF & EW",
+        role: "Counter-UAS SDR Detector & Tactical RF Jammer",
+        platform: "ADALM-Pluto SDR / Fishball 7020 / Tactical Field Terminal",
+        protocol: "Direct RF Synthesizer / Swept Spectrum Analysis",
+        image: "images/Plutosky.jpg",
+        description: "Portable Software-Defined Radio (SDR) platform engineered to detect, monitor, and suppress First-Person View (FPV) drones and ExpressLRS/Crossfire control links. Provides tactical airspace awareness and surgical RF suppression across 868MHz, 915MHz, 2.4GHz, and 5.8GHz video links.",
+        specs: [
+            "Fast spectral scanning across 868MHz, 915MHz, and 2.4GHz ELRS hopping bands",
+            "Automatic detection and waterfall alerting for analog 5.8GHz FPV video carriers",
+            "SDR-synthesized selective RF suppression against adversarial FPV control links",
+            "TCXO clock stabilized platform utilizing ADALM-Pluto / Fishball 7020 transceivers"
         ],
         tags: ["SDR", "Counter-UAS", "ExpressLRS", "FPV Denial", "Electronic Warfare", "ADALM-Pluto"]
       },
       {
-        id: "04",
-        name: "C4ISR SENTINEL",
-        slug: "SENTINEL",
-        domain: "C4ISR & Recon",
-        role: "Command & Control Fusion Engine",
-        platform: "Distributed Edge Nodes",
-        protocol: "Tactical Mesh / ZeroMQ",
-        description: "Centralized command, control, communications, computers, intelligence, surveillance, and reconnaissance platform. It aggregates multi-source battlefield data and automated tracking feeds to maintain shared situational awareness across tactical units.",
-        specs: [
-          "Aggregated Common Operating Picture (COP) integrating heterogeneous sensor feeds",
-          "Automated target coordinate calculation and multi-sensor vector alignment",
-          "Resilient synchronization across low-bandwidth, disrupted tactical radio networks",
-          "Modular operator dashboard displaying live airborne and terrestrial assets"
-        ],
-        tags: ["C4ISR", "Command & Control", "Target Tracking", "Situational Awareness", "Data Fusion"]
-      },
-      {
-        id: "05",
-        name: "SpoofGrid",
-        slug: "SpoofGrid",
-        domain: "RF & EW",
-        role: "GNSS Jamming & Spoofing Suite",
-        platform: "Software-Defined Radio",
-        protocol: "GNSS L1/L2 Synthesizer",
-        description: "Electronic warfare evaluation suite designed for testing GPS jamming and spoofing vectors. It allows operators to simulate GNSS interference and assess the navigation resilience of hardware in contested environments.",
-        specs: [
-          "SDR-generated ephemeris generation for GPS L1/L2 and multi-constellation testbeds",
-          "Automated drift injection to test receiver anti-spoofing and RAIM thresholds",
-          "Controllable power outputs for bench-top shielded RF enclosure validation",
-          "Auditing harness for unmanned navigation systems under electronic attack"
-        ],
-        tags: ["Electronic Warfare", "GPS Spoofing", "GNSS Denial", "SDR", "Navigation Resilience"]
-      },
-      {
         id: "06",
-        name: "GSM-NAVI",
-        slug: "GSM-NAVI",
-        domain: "Alternative PNT",
-        role: "Cellular Tower Resilient Navigation",
-        platform: "Embedded Linux / Modem",
-        protocol: "Timing Advance / RSSI",
-        description: "Resilient positioning and navigation backup framework that calculates location using terrestrial cellular tower signals. It provides autonomous platforms with dependable navigation when GPS signals are degraded, jammed, or spoofed.",
+        name: "SpoofGrid",
+        slug: "spoofgrid",
+        domain: "RF & EW",
+        role: "Tactical GNSS Jamming & Spoofing Evaluation Suite",
+        platform: "ADALM-Pluto + HackRF One / Faraday Cage Testbed",
+        protocol: "FastAPI Web Console / pyadi-iio / gnss-sdr-sim",
+        image: "images/Spoofgrid.jpg",
+        description: "Cage-only GNSS electronic warfare testbench and resilience evaluation platform. Generates 9 distinct attack vectors across 13 satellite navigation bands to stress-test high-precision GNSS receivers (u-blox F9P/F9R, Septentrio Mosaic-X5) and validate anti-spoofing algorithms.",
         specs: [
-          "Trilateration based on GSM Timing Advance (TA) parameters and tower coordinates",
-          "Completely independent of space-based GNSS/GPS constellations",
-          "Local offline cellular base-station database for disconnected tactical operations",
-          "Automatic failover routing for autonomous autopilots losing satellite lock"
+            "Catalog of 9 attack vectors: static, trajectory, ephemeris tamper, drift, CW, chirp, noise, pulse",
+            "Dual-SDR architecture (HackRF One + ADALM-Pluto) with independent process locks",
+            "Coverage across 13 GNSS bands (GPS L1/L2/L5, Galileo E1/E5, BeiDou, GLONASS)",
+            "Strict cage-only ticket authorization safety gate and hardware watchdog auto-kill"
+        ],
+        tags: ["GNSS Spoofing", "Electronic Warfare", "GPS Jamming", "SDR", "FastAPI", "Navigation Resilience"]
+      },
+      {
+        id: "07",
+        name: "GSM-NAVI",
+        slug: "gsm-navi",
+        domain: "Alternative PNT",
+        role: "Terrestrial Cellular Multi-Mast Navigation System",
+        platform: "Embedded ARM Controller / Industrial Cellular Frontend",
+        protocol: "Downlink Cell Broadcast Sniffing / Offline Geodetic Trilateration",
+        image: "images/GSM_NAVi.jpg",
+        description: "Resilient positioning and navigation backup framework that derives accurate geographic coordinates exclusively from ambient cellular base stations. Provides autonomous vehicles and aerial platforms with dependable navigation when satellite navigation is denied or spoofed.",
+        specs: [
+            "Completely passive downlink cell sniffing with zero electromagnetic radiation footprint",
+            "Multi-tower Cell ID (CID) and signal strength (RSSI/RSRP) fingerprinting",
+            "Offline geocoded base station database for disconnected tactical operations",
+            "Non-linear weighted least-squares multilateration outputting UAVCAN/NMEA fixes"
         ],
         tags: ["Alternative PNT", "GPS-Denied", "Cellular Navigation", "GSM Triangulation", "Resilient Nav"]
       },
       {
-        id: "07",
+        id: "08",
         name: "QGC-Simulator",
-        slug: "QGC-Simulator",
+        slug: "qgc-simulator",
         domain: "Autonomy & Sim",
-        role: "HUGINN Companion Flight Simulator",
-        platform: "QGroundControl / SITL",
-        protocol: "MAVLink v2.0",
-        description: "Dedicated companion flight and mission simulator built specifically for the HUGINN UAV platform. Integrated with QGroundControl, it allows operators to test autonomous flight plans, payload behavior, and control parameters virtually before live deployment.",
+        role: "HUGINN Tactical Flight & Hardware-in-the-Loop Simulator",
+        platform: "Liquid-Cooled Workstation / HOTAS Tactical Command Console",
+        protocol: "MAVLink UDP / PX4 SITL / PowerShell Test Automation",
+        image: "images/QGC.jpg",
+        description: "High-fidelity companion flight and mission simulator built specifically for the HUGINN UAV platform and PX4 autonomous autopilots. Featuring deep QGroundControl integration and a physical HOTAS flight console, it allows operators to test autonomous plans, payload behavior, and GNSS jamming failover virtually.",
         specs: [
-          "Full software-in-the-loop (SITL) emulation tailored to HUGINN fixed-wing dynamics",
-          "Native MAVLink integration for rapid pre-mission route validation in QGroundControl",
-          "Synthetic injection of EW perturbations, GPS dropouts, and aerodynamic turbulence",
-          "Virtual test bench for automated payload trigger routines prior to physical flight"
+            "Full software-in-the-loop (SITL) and hardware-in-the-loop (HITL) PX4 aerodynamic emulation",
+            "Native MAVLink integration with custom HUGINN status panels and GPS-cut switches",
+            "Synthetic injection of EW perturbations, clock drifts, and atmospheric turbulence",
+            "Tactical triple-display ground station console with dual military HOTAS controls"
         ],
         tags: ["Simulation", "QGroundControl", "HUGINN Companion", "MAVLink", "SITL", "Mission Validation"]
       },
       {
-        id: "08",
-        name: "ISR_master",
-        slug: "ISR_master",
-        domain: "C4ISR & Recon",
-        role: "ISR Pipeline & Sensor Orchestrator",
-        platform: "Linux Edge Server",
-        protocol: "gRPC / Event Bus",
-        description: "Central management pipeline for organizing and processing Intelligence, Surveillance, and Reconnaissance operations. It coordinates multiple sensor inputs, streamlines intelligence aggregation, and manages target handoffs.",
-        specs: [
-          "Sensor tasking orchestrator directing multi-agent reconnaissance sorties",
-          "Telemetry and target state normalization across airborne and ground feeds",
-          "Automated cue-to-sensor handoff logic when target exits primary camera swath",
-          "High-throughput backpressure message pipeline for field data ingestion"
-        ],
-        tags: ["ISR Operations", "Sensor Fusion", "Target Hand-off", "Recon Pipeline", "Data Ingestion"]
-      },
-      {
         id: "09",
-        name: "aetherstack",
-        slug: "aetherstack",
-        domain: "AI & OSINT",
-        role: "Privacy-Preserving LLM Orchestration",
-        platform: "Self-Hosted / Sovereign",
-        protocol: "Local REST / vLLM",
-        description: "Privacy-first Large Language Model (LLM) orchestration environment. It provides strict data governance, local processing controls, and built-in GDPR compliance so organizations can deploy AI models securely without exposing sensitive information.",
+        name: "ISR_master",
+        slug: "isr-master",
+        domain: "C4ISR & Recon",
+        role: "Tactical Gimbal Control & Central Management Pipeline",
+        platform: "Ruggedized 19-inch Server / Toughbook / Pan-Tilt Gimbal",
+        protocol: "RS-232 / RS-485 / MAVLink v2 / MJPEG / Cursor-on-Target",
+        image: "images/ISR_master.jpg",
+        description: "Central ISR mission management pipeline and video telemetry engine. Controls stabilized dual EO/IR gimbals and laser rangefinders (POD80 and Colibri 2), projects real-time tactical HUD overlays, computes terrain-aware georeferencing, and disseminates targets directly to ATAK via Cursor-on-Target (CoT).",
         specs: [
-          "Deterministic local inference routing preventing external commercial cloud leaks",
-          "Automated PII detection, redaction, and compliance ledger generation",
-          "Strict data retention policies conforming to European GDPR standards",
-          "Hardware-accelerated backend connectors for local vLLM, TensorRT-LLM, and Ollama"
+            "Dual gimbal drivers for ERDI/DYT POD80 (serial/TCP) and NextVision Colibri 2 (MAVLink v2)",
+            "Terrain-aware optical line-of-sight georeferencing using GeoTIFF elevation heightmaps",
+            "Automated NATO SALUTE reconnaissance brief generation with annotated intelligence stills",
+            "Direct Cursor-on-Target (CoT) XML dissemination to Android Team Awareness Kit (ATAK)"
         ],
-        tags: ["LLM Orchestration", "Privacy Architecture", "GDPR Hardened", "Local AI", "Data Governance"]
+        tags: ["ISR Operations", "Gimbal Control", "POD80", "Colibri 2", "EO/IR", "ATAK", "SALUTE"]
       },
       {
         id: "10",
-        name: "O-CEHTP",
-        slug: "O-CEHTP",
-        domain: "AI & OSINT",
-        role: "Hardened OSINT Collection Platform",
-        platform: "Sandboxed Host",
-        protocol: "Encrypted Evidence Vault",
-        description: "Comprehensive Open-Source Intelligence (OSINT) collection and investigation platform. It features an encrypted chain-of-custody evidence locker, isolated sandboxing, active cyber protection defenses, and a modular plugin architecture for customized investigations.",
+        name: "C4ISR SENTINEL",
+        slug: "c4isr-sentinel",
+        domain: "C4ISR & Recon",
+        role: "Command & Control Fusion Hub & Battlefield Operating System",
+        platform: "Modular Edge Server Cube / Firehawk FCS Mobile Android",
+        protocol: "Multi-Stream Data Protocol (MSDP) / ZeroMQ / WebSockets / CoT",
+        image: "images/C4ISR.jpg",
+        description: "Enterprise-grade tactical command, control, and intelligence fusion hub built on a 32-module decoupled microservice architecture. Ingests drone video streams, radar tracks, and blue-force feeds, synthesizing them into a real-time Common Operating Picture (COP) for edge servers and mobile tactical tablets.",
         specs: [
-          "Cryptographically hashed evidence vault with immutable chain-of-custody logging",
-          "Isolated headless browsing sandbox mitigating investigator profiling and tracking",
-          "Active counter-reconnaissance mechanisms to guard research identities",
-          "Extensible plugin system for custom data scrapers, entity extractors, and graph solvers"
+            "32-module decoupled architecture separating core API, Firehawk mobile client, and C2",
+            "Multi-Stream Data Protocol (MSDP) for resilient dataflow over contested tactical mesh radios",
+            "NATO interoperability: STANAG 4609 video metadata, Cursor-on-Target, and MIL-STD-2525 symbology",
+            "Tactical Brutalism UI language optimized for high readability in sunlight and NVG conditions"
         ],
-        tags: ["OSINT", "Sandboxing", "Evidence Locker", "Cyber Defense", "Investigation", "Plugin System"]
+        tags: ["C4ISR", "Command & Control", "Target Tracking", "Situational Awareness", "Data Fusion", "Tactical Mesh"]
       },
       {
         id: "11",
-        name: "CROW",
-        slug: "CROW",
-        domain: "C4ISR & Recon",
-        role: "Tactical Reconnaissance Payload",
-        platform: "Ultra-Compact Embedded",
-        protocol: "Serial / Ethernet Mesh",
-        description: "Lightweight, rapidly deployable tactical payload and reconnaissance unit. It provides close-range electronic monitoring and surveillance capabilities, designed for easy integration across mobile platforms or ground stations.",
+        name: "aetherstack",
+        slug: "aetherstack",
+        domain: "AI & OSINT",
+        role: "Multi-Model Privacy-Governed LLM Control Plane",
+        platform: "Local GPU Rig (CUDA/ROCm/Metal/Vulkan) / VS Code Extension",
+        protocol: "LiteLLM Gateway / Redis Vector Cache / Open WebUI",
+        image: "images/Aether.jpg",
+        description: "Privacy-first multi-model AI orchestration control plane and VS Code extension. Consolidates multiple AI models into a single chat window, runs parallel multi-model consensus checks to highlight code errors, and enforces strict air-gapped local execution on private hardware to prevent defense code leaks.",
         specs: [
-          "Low-SWaP form factor adaptable to unmanned ground rovers and lightweight drones",
-          "Passive spectrum monitoring and short-range acoustic/RF signature logging",
-          "Minimal power draw supporting extended battery-operated reconnaissance stays",
-          "Anti-tamper hardware trigger with immediate memory sanitization / zeroize"
+            "Multi-model synthesis querying an ordered group of LLMs to surface disagreements and bugs",
+            "Air-gapped local sovereign execution using Ollama across CUDA, ROCm, Metal, and Vulkan",
+            "Automatic multi-key failover and quota switching without workflow disruption",
+            "Published VS Code extension marketplace integration with stateful session memory"
         ],
-        tags: ["Tactical Payload", "Close-Range Recon", "SWaP-C", "Low Power", "Surveillance", "Anti-Tamper"]
+        tags: ["LLM Orchestration", "Privacy Architecture", "GDPR Hardened", "Local AI", "VS Code", "Multi-Model"]
       },
       {
         id: "12",
-        name: "HUGINN",
-        slug: "HUGINN",
-        domain: "Autonomy & Sim",
-        role: "Long-Range Reconnaissance UAV",
-        platform: "Fixed-Wing / Hybrid VTOL",
-        protocol: "MAVLink / Encrypted Video",
-        description: "Tactical aerial reconnaissance platform optimized for long-range intelligence, surveillance, and target acquisition. It pairs directly with the QGC-Simulator to streamline mission planning and autonomous execution.",
+        name: "O-CEHTP",
+        slug: "o-cehtp",
+        domain: "AI & OSINT",
+        role: "Hardened OSINT Cyber Intelligence & Investigation Platform",
+        platform: "Sandboxed Container Host / Analyst Multi-Screen Operations Board",
+        protocol: "Hardened Chromium Sandbox / GraphQL / Tor / Neo4j",
+        image: "images/OCEHTP.jpg",
+        description: "Sovereign cyber intelligence and open-source intelligence (OSINT) investigation platform. Features an isolated sandbox browser, autonomous AI research agents, and data federation to automate entity extraction and link analysis across clear and dark web sources while generating court-admissible evidence lockers.",
         specs: [
-          "Extended-endurance airframe engineered for wide-area tactical reconnaissance",
-          "Payload compartment designed to carry TMSI-sensor or CROW tactical modules",
-          "Direct digital twin integration with QGC-Simulator for mission risk reduction",
-          "Autonomous waypoint execution under partial or full communication blackout"
+            "Integrated disposable Chromium sandbox container with anti-fingerprinting and Tor routing",
+            "Autonomous AI research agents extracting entities (names, IBANs, crypto wallets, metadata)",
+            "Data federation engine querying corporate registers, breach dumps, and blockchain ledgers",
+            "Cryptographically hashed (SHA-256) evidence locker maintaining tamper-proof chain of custody"
         ],
-        tags: ["Fixed-Wing UAV", "Long-Range ISR", "Target Acquisition", "MAVLink", "Aerial Platform"]
+        tags: ["OSINT", "Sandboxing", "Evidence Locker", "Cyber Defense", "Investigation", "Graph Database"]
       },
       {
         id: "13",
-        name: "Fruitfly",
-        slug: "Fruitfly",
-        domain: "Autonomy & Sim",
-        role: "Bio-Inspired Connectome Flight Test",
-        platform: "Micro-SNN / Betaflight",
-        protocol: "Optical Flow / Rate Setpoints",
-        description: "Experimental bio-inspired project exploring whether a digitized fruit fly brain can autonomously pilot FPV drones. It investigates adapting insect neural pathways and visual reflexes into flight controls, testing whether biological wiring can handle high-speed navigation and obstacle avoidance without heavy computing hardware.",
+        name: "KRATT",
+        slug: "kratt",
+        domain: "AI & OSINT",
+        role: "Autonomous Quantitative Intelligence & Execution Engine",
+        platform: "Compact Industrial Edge PC / Time-Series Database Rig",
+        protocol: "WebSocket Tick Streaming / Air-Gapped Accounting Boundary",
+        image: "images/KRATT.jpg",
+        description: "Proprietary quantitative market intelligence and algorithmic trading engine designed for cryptocurrencies and equities. Features strict architectural decoupling between market quote ingestion, LLM sentiment policy, and ledger accounting to detect market anomalies and manage automated prop challenges.",
         specs: [
-          "Neural translation of Drosophila LPTC optical flow circuits into Betaflight rate setpoints",
-          "Sub-millisecond reflex response mimicking biological insect saccadic evasion",
-          "Spiking Neural Network (SNN) topology deployable on ultra-low-power microcontrollers",
-          "Bypasses heavy LiDAR and heavy SLAM pipelines for high-speed obstacle navigation"
+            "High-throughput Level 2 order-book streaming and multi-indicator anomaly scoring",
+            "Macro news and social sentiment extraction pipeline utilizing local NLP filters",
+            "Strict architectural boundary isolating execution ledgers from simulation and challenge accounts",
+            "Autonomous prop-firm challenge watchdog with millisecond-resolution circuit breakers"
         ],
-        tags: ["Bio-Inspired AI", "Connectomics", "Drosophila Brain", "Neuromorphic Flight", "FPV Autonomy"]
+        tags: ["AI/ML", "Quantitative Intelligence", "Market Trends", "Sentiment Analysis", "Algorithmic Trading"]
       }
     ];
 
-    // State Variables
-    let currentDomain = "ALL";
-    let searchQuery = "";
-    let currentView = "grid"; // 'grid' or 'table'
-    let activeDrawerSystem = null;
-
     // DOM Elements
+    const categoryBar = document.getElementById("category-bar");
     const catalogGrid = document.getElementById("catalog-grid");
     const catalogTableContainer = document.getElementById("catalog-table-container");
     const catalogTableBody = document.getElementById("catalog-table-body");
     const emptyState = document.getElementById("empty-state");
-    const categoryBar = document.getElementById("category-bar");
     const searchInput = document.getElementById("search-input");
     const filterCount = document.getElementById("filter-count");
     const activeCategoryLabel = document.getElementById("active-category-label");
@@ -633,19 +651,25 @@
     const drawerId = document.getElementById("drawer-id");
     const drawerCategory = document.getElementById("drawer-category");
     const drawerTitle = document.getElementById("drawer-title");
+    const drawerRole = document.getElementById("drawer-role");
+    const drawerImage = document.getElementById("drawer-image");
     const drawerDesc = document.getElementById("drawer-desc");
     const drawerSpecs = document.getElementById("drawer-specs");
     const drawerPlatform = document.getElementById("drawer-platform");
     const drawerProtocol = document.getElementById("drawer-protocol");
     const drawerTags = document.getElementById("drawer-tags");
-    const drawerCloneCmd = document.getElementById("drawer-clone-cmd");
-    const drawerCopyBtn = document.getElementById("drawer-copy-btn");
     const drawerExportBtn = document.getElementById("drawer-export-btn");
-    const drawerRepoBtn = document.getElementById("drawer-repo-btn");
+    const drawerPageBtn = document.getElementById("drawer-page-btn");
 
-    // Toast
+    // Toast Elements
     const toast = document.getElementById("toast");
     const toastText = document.getElementById("toast-text");
+
+    // State Variables
+    let currentDomain = "ALL";
+    let searchQuery = "";
+    let currentView = "grid";
+    let activeDrawerSystem = null;
 
     // Live UTC Clock
     function updateClock() {
@@ -684,7 +708,7 @@
     }
 
     // Categories Setup
-    const DOMAINS = ["ALL", "RF & EW", "C4ISR & Recon", "Alternative PNT", "Autonomy & Sim", "AI & OSINT"];
+    const DOMAINS = ["ALL", "RF & EW", "Alternative PNT", "C4ISR & Recon", "Autonomy & Sim", "AI & OSINT"];
 
     function renderCategoryButtons() {
       categoryBar.innerHTML = "";
@@ -730,61 +754,70 @@
       });
     }
 
-    // Render Grid Cards
+    // Render Grid Cards (Featuring High-Res Thumbnails & Direct Project Links)
     function renderGrid(items) {
       catalogGrid.innerHTML = "";
       items.forEach(repo => {
         const card = document.createElement("article");
-        card.className = "system-card bg-mono-900/90 p-6 flex flex-col justify-between border-hairline";
+        card.className = "system-card bg-mono-900/90 p-5 flex flex-col justify-between border-hairline";
 
         const tagsHtml = repo.tags.slice(0, 3).map(tag => 
           `<span class="px-2 py-0.5 border border-mono-800 text-mono-400 text-[10px] font-mono bg-mono-950">${tag}</span>`
         ).join("");
 
+        const projectUrl = `projects/${repo.slug.toLowerCase()}.html`;
+
         card.innerHTML = `
           <div>
             <!-- Top Metadata Strip -->
-            <div class="flex items-center justify-between font-mono text-xs border-hairline-b pb-3 mb-4">
+            <div class="flex items-center justify-between font-mono text-xs border-hairline-b pb-2.5 mb-3">
               <span class="text-accent-orange font-semibold tracking-wider">#${repo.id}</span>
-              <span class="text-mono-400 uppercase text-[11px]">${repo.domain}</span>
+              <span class="text-mono-400 uppercase text-[10px] px-1.5 py-0.5 border border-mono-800 bg-mono-950">${repo.domain}</span>
             </div>
 
+            <!-- Thumbnail Blueprint Image Preview -->
+            <a href="${projectUrl}" class="block relative bg-mono-950 border-hairline overflow-hidden mb-3.5 group cursor-pointer">
+              <img src="${repo.image}" alt="${repo.name} Schematic" class="w-full h-44 object-cover object-center group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-mono-950/80 via-transparent to-transparent"></div>
+              <span class="absolute bottom-2 left-2 text-[10px] font-mono px-2 py-0.5 bg-mono-950/90 border border-mono-700 text-mono-300 uppercase">${repo.platform.split('/')[0]}</span>
+            </a>
+
             <!-- Header and Function -->
-            <div class="mb-3">
+            <div class="mb-2">
               <h3 class="text-lg font-semibold text-white tracking-tight font-sans flex items-center justify-between">
-                <span>${repo.name}</span>
-                <a href="https://github.com/piksliviksi/${repo.slug}" target="_blank" rel="noopener noreferrer" 
-                   title="Open on GitHub" 
-                   class="text-mono-500 hover:text-white p-1 transition">
+                <a href="${projectUrl}" class="hover:text-accent-orange transition-colors">
+                  ${repo.name}
+                </a>
+                <a href="${projectUrl}" title="Open Full Specification Page" class="text-mono-500 hover:text-white p-1 transition">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                   </svg>
                 </a>
               </h3>
-              <div class="text-[11px] font-mono text-mono-400 mt-0.5">${repo.role}</div>
+              <div class="text-[11px] font-mono text-accent-orange mt-0.5">${repo.role}</div>
             </div>
 
             <!-- Description -->
-            <p class="text-mono-300 text-xs font-sans leading-relaxed line-clamp-3 mb-4">
+            <p class="text-mono-300 text-xs font-sans leading-relaxed line-clamp-3 mb-3">
               ${repo.description}
             </p>
           </div>
 
-          <!-- Bottom Telemetry & Inspect Trigger -->
-          <div class="border-hairline-t pt-4 mt-2">
-            <div class="flex flex-wrap gap-1 mb-4">
+          <!-- Bottom Telemetry & Navigation -->
+          <div class="border-hairline-t pt-3 mt-2">
+            <div class="flex flex-wrap gap-1 mb-3">
               ${tagsHtml}
             </div>
 
             <div class="flex items-center justify-between font-mono text-xs pt-1">
               <button onclick="openDrawer('${repo.id}')" 
-                      class="text-mono-200 hover:text-white hover:underline flex items-center space-x-1 uppercase text-[11px]">
+                      class="text-mono-300 hover:text-white flex items-center space-x-1 uppercase text-[11px]">
                 <span>VIEW SPECIFICATION</span>
                 <span class="text-mono-500">→</span>
               </button>
-              <a href="https://github.com/piksliviksi/${repo.slug}" target="_blank" rel="noopener noreferrer"
-                 class="text-mono-400 hover:text-mono-200 text-[11px] uppercase">
-                SOURCE [↗]
+              <a href="${projectUrl}" 
+                 class="text-accent-orange hover:underline text-[11px] uppercase font-semibold flex items-center space-x-1">
+                <span>PROJECT PAGE [↗]</span>
               </a>
             </div>
           </div>
@@ -799,10 +832,11 @@
       items.forEach(repo => {
         const row = document.createElement("tr");
         row.className = "hover:bg-mono-900 transition-colors";
+        const projectUrl = `projects/${repo.slug.toLowerCase()}.html`;
         row.innerHTML = `
           <td class="p-3 text-center text-accent-orange font-mono font-semibold">${repo.id}</td>
           <td class="p-3 font-semibold text-white">
-            <a href="https://github.com/piksliviksi/${repo.slug}" target="_blank" class="hover:underline flex items-center space-x-1.5">
+            <a href="${projectUrl}" class="hover:text-accent-orange hover:underline flex items-center space-x-1.5">
               <span>${repo.name}</span>
             </a>
             <div class="text-[10px] text-mono-500 font-normal">${repo.role}</div>
@@ -813,10 +847,13 @@
             <div>${repo.platform}</div>
             <div class="text-mono-500 text-[10px]">${repo.protocol}</div>
           </td>
-          <td class="p-3 text-right">
-            <button onclick="openDrawer('${repo.id}')" class="px-2.5 py-1 border border-mono-700 hover:border-mono-300 text-mono-300 hover:text-white text-[10px] uppercase">
+          <td class="p-3 text-right space-x-2">
+            <button onclick="openDrawer('${repo.id}')" class="px-2 py-1 border border-mono-700 hover:border-mono-300 text-mono-300 hover:text-white text-[10px] uppercase">
               SPEC
             </button>
+            <a href="${projectUrl}" class="px-2.5 py-1 bg-accent-orange text-black font-semibold text-[10px] uppercase hover:bg-orange-500 transition inline-block">
+              PAGE ↗
+            </a>
           </td>
         `;
         catalogTableBody.appendChild(row);
@@ -857,16 +894,17 @@
       drawerId.textContent = `SYS_${repo.id}`;
       drawerCategory.textContent = repo.domain;
       drawerTitle.textContent = repo.name;
+      drawerRole.textContent = repo.role;
+      drawerImage.src = repo.image;
       drawerDesc.textContent = repo.description;
       drawerPlatform.textContent = repo.platform;
       drawerProtocol.textContent = repo.protocol;
-      drawerRepoBtn.href = `https://github.com/piksliviksi/${repo.slug}`;
-      drawerCloneCmd.textContent = `git clone https://github.com/piksliviksi/${repo.slug}.git`;
+      drawerPageBtn.href = `projects/${repo.slug.toLowerCase()}.html`;
 
       // Render specs list
       drawerSpecs.innerHTML = repo.specs.map(s => 
         `<li class="flex items-start space-x-2">
-          <span class="text-mono-500 font-mono select-none">&bull;</span>
+          <span class="text-accent-orange font-mono select-none">■</span>
           <span class="leading-relaxed font-sans text-xs">${s}</span>
         </li>`
       ).join("");
@@ -891,24 +929,26 @@
     drawerCloseBtn.addEventListener("click", closeDrawer);
     drawerBackdrop.addEventListener("click", closeDrawer);
 
-    // Copy Drawer Clone Command
-    drawerCopyBtn.addEventListener("click", () => {
-      if (activeDrawerSystem) {
-        copyToClipboard(
-          `git clone https://github.com/piksliviksi/${activeDrawerSystem.slug}.git`,
-          `Git clone command copied for ${activeDrawerSystem.name}`
-        );
-      }
-    });
-
     // Copy Full Brief
     drawerExportBtn.addEventListener("click", () => {
       if (!activeDrawerSystem) return;
-      const text = `[SYSTEM ${activeDrawerSystem.id}] ${activeDrawerSystem.name}\n` +
-                   `Domain: ${activeDrawerSystem.domain} | Platform: ${activeDrawerSystem.platform}\n` +
-                   `Repository: https://github.com/piksliviksi/${activeDrawerSystem.slug}\n\n` +
-                   `Description:\n${activeDrawerSystem.description}\n\n` +
-                   `Capabilities:\n${activeDrawerSystem.specs.map(s => "- " + s).join("\n")}\n\n` +
+      const text = `[SYSTEM ${activeDrawerSystem.id}] ${activeDrawerSystem.name}
+` +
+                   `Role: ${activeDrawerSystem.role}
+` +
+                   `Domain: ${activeDrawerSystem.domain} | Platform: ${activeDrawerSystem.platform}
+` +
+                   `Project Specification: https://piksliviksi.github.io/projects/${activeDrawerSystem.slug.toLowerCase()}.html
+
+` +
+                   `Description:
+${activeDrawerSystem.description}
+
+` +
+                   `Capabilities:
+${activeDrawerSystem.specs.map(s => "- " + s).join("\n")}
+
+` +
                    `Tags: ${activeDrawerSystem.tags.join(", ")}`;
       copyToClipboard(text, `Technical brief for ${activeDrawerSystem.name} copied.`);
     });

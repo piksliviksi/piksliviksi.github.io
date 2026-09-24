@@ -1,4 +1,14 @@
-<!DOCTYPE html>
+"""
+update_index.py
+Regenerates index.html and piksliviksi_tactical_systems_catalog.html with:
+- Corrected HUGINN domain (Alternative PNT) & role
+- Corrected CROW domain (RF & EW) & role (Ground-Based Passive Radar System)
+- High-res blueprint images for all cards
+- Direct links to dedicated project pages (projects/<slug>.html) instead of private GitHub repos
+- Enhanced interactive drawer with image preview and dedicated page button
+"""
+
+INDEX_HTML = """<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
@@ -932,23 +942,12 @@
     // Copy Full Brief
     drawerExportBtn.addEventListener("click", () => {
       if (!activeDrawerSystem) return;
-      const text = `[SYSTEM ${activeDrawerSystem.id}] ${activeDrawerSystem.name}
-` +
-                   `Role: ${activeDrawerSystem.role}
-` +
-                   `Domain: ${activeDrawerSystem.domain} | Platform: ${activeDrawerSystem.platform}
-` +
-                   `Project Specification: https://piksliviksi.github.io/projects/${activeDrawerSystem.slug.toLowerCase()}.html
-
-` +
-                   `Description:
-${activeDrawerSystem.description}
-
-` +
-                   `Capabilities:
-${activeDrawerSystem.specs.map(s => "- " + s).join("\n")}
-
-` +
+      const text = `[SYSTEM ${activeDrawerSystem.id}] ${activeDrawerSystem.name}\n` +
+                   `Role: ${activeDrawerSystem.role}\n` +
+                   `Domain: ${activeDrawerSystem.domain} | Platform: ${activeDrawerSystem.platform}\n` +
+                   `Project Specification: https://piksliviksi.github.io/projects/${activeDrawerSystem.slug.toLowerCase()}.html\n\n` +
+                   `Description:\n${activeDrawerSystem.description}\n\n` +
+                   `Capabilities:\n${activeDrawerSystem.specs.map(s => "- " + s).join("\\n")}\n\n` +
                    `Tags: ${activeDrawerSystem.tags.join(", ")}`;
       copyToClipboard(text, `Technical brief for ${activeDrawerSystem.name} copied.`);
     });
@@ -1006,3 +1005,22 @@ ${activeDrawerSystem.specs.map(s => "- " + s).join("\n")}
   </script>
 </body>
 </html>
+"""
+
+import os
+
+def main():
+    root_dir = os.path.dirname(__file__)
+    index_path = os.path.join(root_dir, "index.html")
+    catalog_path = os.path.join(root_dir, "piksliviksi_tactical_systems_catalog.html")
+
+    with open(index_path, "w", encoding="utf-8") as f:
+        f.write(INDEX_HTML)
+    print(f"Updated: {index_path}")
+
+    with open(catalog_path, "w", encoding="utf-8") as f:
+        f.write(INDEX_HTML)
+    print(f"Updated: {catalog_path}")
+
+if __name__ == "__main__":
+    main()
