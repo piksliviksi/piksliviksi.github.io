@@ -12,12 +12,12 @@ SYSTEMS = [
         "name": "HUGINN",
         "domain": "Alternative PNT",
         "role": "Autonomous GPS-Denied UAV Navigation & Sensor Fusion System",
-        "platform": "Jetson AGX Orin / Raspberry Pi Zero 2W / Pixhawk PX4",
+        "platform": "Jetson AGX Orin / Raspberry Pi Zero 2W / Pixhawk (PX4 / ArduPilot)",
         "protocol": "MAVLink (VISION_POSITION_ESTIMATE) / DVB-T2 / LTE",
         "classification": "SOVEREIGN DEFENSE SPECIFICATION",
-        "status": "FIELD EVALUATED & TESTED",
-        "primary_image": "huginn.jpg",
-        "secondary_image": "huginn2.jpg",
+        "status": None,
+        "primary_image": "huginn2.jpg",
+        "secondary_image": None,
         "thumbnail_labels": [
             "GPS-Denied UAV Navigation Core",
             "DVB-T2 Broadcast Tower Pseudoranges (Airspy Mini)",
@@ -26,13 +26,13 @@ SYSTEMS = [
             "DSMAC Optical Scene-Matching Area Correlation",
             "Direct QGC-Simulator SITL/HITL Compatibility",
             "8-State Extended Kalman Filter (EKF) FusionEngine",
-            "PX4 EKF2 Injection via VISION_POSITION_ESTIMATE"
+            "PX4/ArduPilot EKF2 Injection via VISION_POSITION_ESTIMATE"
         ],
         "summary": "HUGINN is an autonomous navigation system for tactical unmanned aerial vehicles (fixed-wing and hybrid VTOL) operating in contested, GPS-denied environments. By synthesizing terrestrial signals of opportunity (DVB-T2 and LTE), radar/optical terrain contour matching, and visual scene correlation, HUGINN maintains sub-meter to tens-of-meters localization when GPS is jammed or spoofed.",
         "what_it_does": [
             "Maintains high-confidence 3D position, velocity, and attitude estimates during total GNSS outages, jamming, or deceptive satellite spoofing attacks.",
             "Replaces traditional satellite positioning by dynamically harvesting ambient terrestrial radio frequency broadcasts and physical ground topology.",
-            "Injects real-time synthetic position updates directly into the PX4 autopilot flight computer, ensuring flight stability, mission continuation, and return-to-base capabilities.",
+            "Injects real-time synthetic position updates directly into PX4 or ArduPilot autopilot flight computers, ensuring flight stability, mission continuation, and return-to-base capabilities.",
             "Integrates seamless failover finite state machines (FSM) that continuously monitor GNSS signal health and switch to alternative PNT sources without human intervention.",
             "Supports both tactical fixed-wing high-endurance cruising and VTOL quad-plane launch/recovery profiles."
         ],
@@ -42,13 +42,13 @@ SYSTEMS = [
             "**TERCOM (Terrain Contour Matching)**: Samples surface elevation clearance beneath the aircraft and matches elevation profiles against pre-loaded high-resolution Digital Elevation Models (DEM) via sliding-window normalized cross-correlation.",
             "**DSMAC (Digital Scene-Matching Area Correlation)**: Downward-looking optical cameras track ground landmarks, comparing real-time frames with georeferenced satellite imagery to eliminate cumulative inertial drift.",
             "**8-State EKF FusionEngine**: An 8-state Extended Kalman Filter fuses RF pseudoranges, cell multilateration, TERCOM fixes, and DSMAC optical vectors into a single unified navigation solution.",
-            "**Autopilot Telemetry Bridge**: Bridges fused estimates into MAVLink `VISION_POSITION_ESTIMATE` messages streamed at 20-50 Hz into the PX4 EKF2 state estimator, transparently keeping the drone on mission."
+            "**Autopilot Telemetry Bridge**: Bridges fused estimates into MAVLink `VISION_POSITION_ESTIMATE` messages streamed at 20-50 Hz into PX4 or ArduPilot EKF2 state estimators, transparently keeping the drone on mission."
         ],
         "hardware_specs": [
             {"component": "Navigation Computer", "spec": "NVIDIA Jetson AGX Orin (64GB, 275 TOPS) for neural DSMAC vision & terrain correlation; or Raspberry Pi Zero 2W for low-SWaP lightweight deployments"},
             {"component": "RF Frontend Receiver", "spec": "Airspy Mini SDR (high-dynamic range frontend tuned for DVB-T2 UHF 470–862 MHz and GSM/LTE 800–1800 MHz)"},
             {"component": "GNSS Subsystem", "spec": "Septentrio mosaic-X5 multi-constellation RTK GNSS receiver with AIM+ anti-jamming/anti-spoofing; secondary u-blox backup"},
-            {"component": "Autopilot Flight Controller", "spec": "Pixhawk 6X / Cube Orange running PX4 Autopilot v1.14+ firmware"},
+            {"component": "Autopilot Flight Controller", "spec": "Pixhawk 6X / Cube Orange running PX4 or ArduPilot firmware"},
             {"component": "IMU / Bridge Firmware", "spec": "NodeMCU ESP8266 high-rate serial/SPI hardware bridge"},
             {"component": "Airframe Platform", "spec": "Composite tactical fixed-wing / VTOL airframe with forward tractor prop and 4-motor VTOL quad-lift booms"}
         ],
@@ -683,13 +683,8 @@ def generate_project_page(sys_data, prev_sys, next_sys):
     if sys_data.get("secondary_image"):
         secondary_img_html = f"""
         <div class="border-hairline bg-mono-900/40 p-4 mt-6">
-          <div class="text-mono-400 font-mono text-xs uppercase tracking-wider mb-3 flex items-center space-x-2">
-            <span class="w-2 h-2 bg-accent-cyan"></span>
-            <span>Secondary Architectural Diagram / Telemetry View</span>
-          </div>
-          <img src="../images/{sys_data['secondary_image']}" alt="{sys_data['name']} Secondary Diagram" 
-               class="w-full h-auto border-hairline cursor-pointer hover:opacity-95 transition"
-               onclick="openModal('../images/{sys_data['secondary_image']}')" />
+          <img src="../images/{sys_data['secondary_image']}" alt="{sys_data['name']} Architectural Blueprint" 
+               class="w-full h-auto border-hairline" />
         </div>
         """
 

@@ -112,7 +112,6 @@
         <div class="flex items-center space-x-3 font-mono text-xs">
           <span class="px-2 py-0.5 bg-accent-orange text-black font-bold">SYS_01</span>
           <span class="px-2 py-0.5 border border-mono-700 bg-mono-950 text-mono-300 uppercase">Alternative PNT</span>
-          <span class="px-2 py-0.5 border border-emerald-900/50 bg-emerald-950/20 text-emerald-400 uppercase text-[10px]">FIELD EVALUATED & TESTED</span>
         </div>
         <div class="font-mono text-xs text-mono-500 uppercase tracking-widest hidden sm:block">
           SOVEREIGN DEFENSE SPECIFICATION
@@ -129,12 +128,16 @@
         <p class="text-mono-300 text-sm sm:text-base leading-relaxed font-sans mb-6">
           HUGINN is an autonomous navigation system for tactical unmanned aerial vehicles (fixed-wing and hybrid VTOL) operating in contested, GPS-denied environments. By synthesizing terrestrial signals of opportunity (DVB-T2 and LTE), radar/optical terrain contour matching, and visual scene correlation, HUGINN maintains sub-meter to tens-of-meters localization when GPS is jammed or spoofed.
         </p>
+        
+        <p class="text-mono-300 text-sm sm:text-base leading-relaxed font-sans mb-6">
+          In modern electronic warfare scenarios where GNSS signals are unreliable or completely unavailable, traditional navigation systems fail. HUGINN solves this by creating a resilient positioning solution that combines multiple alternative navigation techniques into a unified, high-confidence position estimate. The system is compatible with both PX4 and ArduPilot flight controllers, making it versatile for various UAV platforms and mission profiles.
+        </p>
 
         <!-- Fast Specs Telemetry Strip -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 font-mono text-xs pt-4 border-hairline-t">
           <div>
             <span class="text-mono-500 uppercase block text-[10px]">Operating Platform</span>
-            <span class="text-mono-200">Jetson AGX Orin / Raspberry Pi Zero 2W / Pixhawk PX4</span>
+            <span class="text-mono-200">Jetson AGX Orin / Raspberry Pi Zero 2W / Pixhawk (PX4 / ArduPilot)</span>
           </div>
           <div>
             <span class="text-mono-500 uppercase block text-[10px]">Telemetry & Protocol</span>
@@ -158,9 +161,8 @@
         <span class="font-mono text-[11px] text-mono-500">CLICK IMAGE TO ENLARGE</span>
       </div>
 
-      <!-- Main Thumbnail Blueprint -->
-      <div class="relative group bg-mono-950 border-hairline overflow-hidden cursor-pointer" onclick="openModal('../images/huginn.jpg')">
-        <img src="../images/huginn.jpg" alt="HUGINN Architectural Blueprint" 
+            <div class="relative group bg-mono-950 border-hairline overflow-hidden cursor-pointer" onclick="openModal('../images/huginn2.jpg')">
+        <img src="../images/huginn2.jpg" alt="HUGINN Architectural Blueprint" 
              class="w-full h-auto object-cover group-hover:scale-[1.01] transition-transform duration-300" />
         <div class="absolute bottom-3 right-3 px-3 py-1.5 bg-mono-950/90 border border-mono-700 text-mono-200 font-mono text-xs flex items-center space-x-1.5 opacity-90 group-hover:opacity-100 transition">
           <svg class="w-3.5 h-3.5 text-accent-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,6 +170,7 @@
           </svg>
           <span>INSPECT HIGH-RES SCHEMATIC</span>
         </div>
+      </div>
       </div>
 
       <!-- Blueprint Extraction Tags -->
@@ -199,21 +202,13 @@
               <span>8-State Extended Kalman Filter (EKF) FusionEngine</span>
             </span><span class="px-2.5 py-1 bg-mono-950 border border-mono-700 text-mono-300 font-mono text-[11px] inline-flex items-center space-x-1.5">
               <span class="w-1.5 h-1.5 bg-accent-orange"></span>
-              <span>PX4 EKF2 Injection via VISION_POSITION_ESTIMATE</span>
+              <span>PX4/ArduPilot EKF2 Injection via VISION_POSITION_ESTIMATE</span>
             </span>
         </div>
       </div>
 
       
-        <div class="border-hairline bg-mono-900/40 p-4 mt-6">
-          <div class="text-mono-400 font-mono text-xs uppercase tracking-wider mb-3 flex items-center space-x-2">
-            <span class="w-2 h-2 bg-accent-cyan"></span>
-            <span>Secondary Architectural Diagram / Telemetry View</span>
-          </div>
-          <img src="../images/huginn2.jpg" alt="HUGINN Secondary Diagram" 
-               class="w-full h-auto border-hairline cursor-pointer hover:opacity-95 transition"
-               onclick="openModal('../images/huginn2.jpg')" />
-        </div>
+        
         
     </section>
 
@@ -235,7 +230,7 @@
               <span>Replaces traditional satellite positioning by dynamically harvesting ambient terrestrial radio frequency broadcasts and physical ground topology.</span>
             </li><li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans">
               <span class="text-accent-orange font-mono select-none font-bold mt-0.5">■</span>
-              <span>Injects real-time synthetic position updates directly into the PX4 autopilot flight computer, ensuring flight stability, mission continuation, and return-to-base capabilities.</span>
+              <span>Injects real-time synthetic position updates directly into PX4 or ArduPilot autopilot flight computers, ensuring flight stability, mission continuation, and return-to-base capabilities.</span>
             </li><li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans">
               <span class="text-accent-orange font-mono select-none font-bold mt-0.5">■</span>
               <span>Integrates seamless failover finite state machines (FSM) that continuously monitor GNSS signal health and switch to alternative PNT sources without human intervention.</span>
@@ -270,7 +265,7 @@
               <div>**8-State EKF FusionEngine**: An 8-state Extended Kalman Filter fuses RF pseudoranges, cell multilateration, TERCOM fixes, and DSMAC optical vectors into a single unified navigation solution.</div>
             </li><li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans">
               <span class="text-accent-cyan font-mono select-none font-bold mt-0.5">▶</span>
-              <div>**Autopilot Telemetry Bridge**: Bridges fused estimates into MAVLink `VISION_POSITION_ESTIMATE` messages streamed at 20-50 Hz into the PX4 EKF2 state estimator, transparently keeping the drone on mission.</div>
+              <div>**Autopilot Telemetry Bridge**: Bridges fused estimates into MAVLink `VISION_POSITION_ESTIMATE` messages streamed at 20-50 Hz into PX4 or ArduPilot EKF2 state estimators, transparently keeping the drone on mission.</div>
             </li>
         </ul>
       </section>
@@ -297,7 +292,7 @@
               <span class="text-mono-200 text-xs font-sans leading-relaxed">Septentrio mosaic-X5 multi-constellation RTK GNSS receiver with AIM+ anti-jamming/anti-spoofing; secondary u-blox backup</span>
             </div><div class="border-hairline p-4 bg-mono-900/60">
               <span class="text-accent-orange font-mono text-xs block mb-1 font-semibold">Autopilot Flight Controller</span>
-              <span class="text-mono-200 text-xs font-sans leading-relaxed">Pixhawk 6X / Cube Orange running PX4 Autopilot v1.14+ firmware</span>
+              <span class="text-mono-200 text-xs font-sans leading-relaxed">Pixhawk 6X / Cube Orange running PX4 or ArduPilot firmware</span>
             </div><div class="border-hairline p-4 bg-mono-900/60">
               <span class="text-accent-orange font-mono text-xs block mb-1 font-semibold">IMU / Bridge Firmware</span>
               <span class="text-mono-200 text-xs font-sans leading-relaxed">NodeMCU ESP8266 high-rate serial/SPI hardware bridge</span>
