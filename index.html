@@ -402,17 +402,17 @@
         slug: "huginn",
         domain: "Alternative PNT",
         role: "Autonomous GPS-Denied UAV Navigation & Sensor Fusion System",
-        platform: "Jetson AGX Orin / Pi Zero 2W / Pixhawk PX4",
+        platform: "Jetson AGX Orin / Pi Zero 2W / Pixhawk (PX4 / ArduPilot)",
         protocol: "MAVLink (VISION_POSITION_ESTIMATE) / DVB-T2 / LTE",
-        image: "images/huginn.jpg",
-        description: "Autonomous navigation system for tactical UAVs operating in GPS-denied environments. Uses DVB-T2 pseudoranges, LTE cell tower triangulation, TERCOM terrain matching, and DSMAC visual correlation to maintain precision position when satellite navigation is jammed or spoofed.",
+        image: "images/huginn2.jpg",
+        description: "Autonomous navigation system for tactical UAVs operating in GPS-denied environments. Uses DVB-T2 pseudoranges, LTE cell tower triangulation, TERCOM terrain matching, and DSMAC visual correlation to maintain precision position when satellite navigation is jammed or spoofed. Compatible with PX4 and ArduPilot flight controllers.",
         specs: [
             "DVB-T2 pseudoranges via Airspy Mini utilizing MUSIC algorithm and Gauss-Newton solver",
             "Terrestrial LTE base-station triangulation matched against local geocoded tower database",
             "TERCOM terrain elevation matching and DSMAC optical scene correlation",
-            "Direct 8-state EKF fusion streamed as VISION_POSITION_ESTIMATE into PX4 EKF2"
+            "Direct 8-state EKF fusion streamed as VISION_POSITION_ESTIMATE into PX4 or ArduPilot EKF2"
         ],
-        tags: ["Alternative PNT", "GPS-Denied", "DVB-T2", "TERCOM", "DSMAC", "PX4 EKF2", "Jetson Orin"]
+        tags: ["Alternative PNT", "GPS-Denied", "DVB-T2", "TERCOM", "DSMAC", "PX4/ArduPilot EKF2", "Jetson Orin"]
       },
       {
         id: "02",
