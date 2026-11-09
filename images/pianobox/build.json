@@ -1,0 +1,135 @@
+{
+  "app_version": "1.2 beta",
+  "app_revision": "1f5e33138dfb5d4a2a555159c4c822cc9972fa09",
+  "pi_executable_sha256": "30ac36eabcda688caa9e30d9a129092d44f950a619b2468246a64a55c2bae831",
+  "generated_at_utc": "2026-11-09T22:54:38.165562+00:00",
+  "renderer": "Current Slint UI, software renderer",
+  "content": "Example sounds and songs",
+  "display": {
+    "width": 1024,
+    "height": 600,
+    "preset_inches": 7
+  },
+  "images": [
+    {
+      "file": "main.png",
+      "state": "main",
+      "sha256": "8f0588f28b3d5cd15a7220519805dec30f44f14583c496d916a20194d7b6037a"
+    },
+    {
+      "file": "sample-empty.png",
+      "state": "sample-empty",
+      "sha256": "17984dd301f295c7e22ab3fb4436a33de07801db38f2f353d24148f7854e9e35"
+    },
+    {
+      "file": "sample.png",
+      "state": "sample",
+      "sha256": "f062968844dd6255cdf934271bcd0180f8ef577e5a2229d21b98989340a8fbce"
+    },
+    {
+      "file": "chop.png",
+      "state": "chop",
+      "sha256": "1fa3d3624b3ad3a0d8ff91563e2c96a4e1b735e8ec1c991be947fed6a2c3fe56"
+    },
+    {
+      "file": "browser.png",
+      "state": "browser-long",
+      "sha256": "0468ba9bda63dbc064ee621d7b77d9b5d7164d875062bc0241d6e46aa6688862"
+    },
+    {
+      "file": "projects.png",
+      "state": "projects",
+      "sha256": "43926f8c7f2870f335aca8cc02c4e7a8da6ae8550ded05b7a890abac7a5db431"
+    },
+    {
+      "file": "imported-projects.png",
+      "state": "imported-projects",
+      "sha256": "21a874a05b9b884301d16017ffbeeb189965c82fd9ef506acc7dc768ab347ede"
+    },
+    {
+      "file": "apple-import.png",
+      "state": "apple-ready",
+      "sha256": "0f13cc2267508683335df10d1621658ff8c902f4f38ebe6f53d24bd42436df3c"
+    },
+    {
+      "file": "export-apple.png",
+      "state": "usb-apple",
+      "sha256": "1e77c42b1bfbed4ac6b28a07dd71f4bf9fbb12b6e384504ea45707b050fdabd4"
+    },
+    {
+      "file": "seq.png",
+      "state": "seq",
+      "sha256": "24e6cc665a8d550ddde36748975200104b1558a46891a14153c3b8d24ba09caf"
+    },
+    {
+      "file": "notes.png",
+      "state": "notes",
+      "sha256": "27efb7c86e11def873f875a67d732bc04712cbba8915bc4c704080adae58f1ee"
+    },
+    {
+      "file": "clip-menu.png",
+      "state": "clip-menu",
+      "sha256": "fc104971fb5ecf13610559b9a5a2b2dc9e6fbaf275b7b86cc1b82fa51f8611d9"
+    },
+    {
+      "file": "mix.png",
+      "state": "mix",
+      "sha256": "8ce5704395129c7ae3a152db82c718037c01896534d20fd3a656402ba506bcba"
+    },
+    {
+      "file": "mix-channel.png",
+      "state": "mix-channel",
+      "sha256": "878116c75213a309d8d6c455883d08a41d30041616fab1f007edbabec3f34a2a"
+    },
+    {
+      "file": "efx.png",
+      "state": "efx",
+      "sha256": "208f96ea982a288960b7aea544e391796bf20253e2753e41fd5e8dabe1b80199"
+    },
+    {
+      "file": "comp-edit.png",
+      "state": "comp-edit",
+      "sha256": "da30f9b508d5e788313e35e9226a00a94a81b4102441a97a06fdb5c190ff2b35"
+    },
+    {
+      "file": "synth.png",
+      "state": "synth",
+      "sha256": "cfff9aaec646c6b3bbe984f8cc35d0b99bad3539c2aac4dfb3f006bc9b9c088d"
+    },
+    {
+      "file": "learn.png",
+      "state": "learn",
+      "sha256": "129da1cdcc6943e94d33a85da511f3ef827029350f72a1f216d5190725002173"
+    },
+    {
+      "file": "setup.png",
+      "state": "setup",
+      "sha256": "9aa337ac7d15170ecd6cf435b921273efb2f4b879db33096a965b4dcf259e22a"
+    },
+    {
+      "file": "import.png",
+      "state": "import",
+      "sha256": "15c1edbbd1af4399460e2ae30fbabf7fe71ace51ef9769ecce87e5a9034367fc"
+    },
+    {
+      "file": "midi-learn.png",
+      "state": "midi-learn",
+      "sha256": "7402fbe7ecc54be2a638a20fe519351523177be8c080dcacbd5fa2d540a6a051"
+    },
+    {
+      "file": "controls.png",
+      "state": "controls",
+      "sha256": "d36abf0b1f2fa455b62662d88d648c683003d9051a4983c06524f41ab075866a"
+    },
+    {
+      "file": "snap.png",
+      "state": "snap",
+      "sha256": "d9a62d83ac07c5a4d07b221eef13a09fa69f9b4a89ad020cd7fef18e3f14b6f0"
+    },
+    {
+      "file": "drop.png",
+      "state": "drop",
+      "sha256": "d63869a23a565f6ab80948a4d2f7188114a6268db518bec6b8356e5ecc26c58f"
+    }
+  ]
+}
