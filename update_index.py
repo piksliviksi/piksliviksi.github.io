@@ -654,6 +654,7 @@ INDEX_HTML = """<!DOCTYPE html>
             "Record your own sounds, trim, loop, reverse, chop onto the keys and play them back",
             "Eight-layer MIDI song recorder with count-in, quantize, piano roll and clip editing",
             "Eight effects, four master compressor flavours and a lookahead limiter, all with knobs you can hear",
+            "Projects with their own favourites, libraries and effect settings; export one to USB with its sounds",
             "Chord trainer on the circle of fifths with stars, lessons and a built-in help page per screen"
         ],
         tags: ["Music", "Education", "Raspberry Pi", "Rust", "Slint", "MIDI", "Sampler", "Synth", "Open Source"]
