@@ -179,7 +179,7 @@ INDEX_HTML = """<!DOCTYPE html>
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-mono-800 border-hairline mt-8 font-mono text-xs">
         <div class="bg-mono-900 p-4">
           <div class="text-mono-500 uppercase">Documented Systems</div>
-          <div class="text-xl font-semibold text-white mt-1" id="stat-total">13</div>
+          <div class="text-xl font-semibold text-white mt-1" id="stat-total">14</div>
         </div>
         <div class="bg-mono-900 p-4">
           <div class="text-mono-500 uppercase">Core Domains</div>
@@ -639,6 +639,24 @@ INDEX_HTML = """<!DOCTYPE html>
             "Autonomous prop-firm challenge watchdog with millisecond-resolution circuit breakers"
         ],
         tags: ["AI/ML", "Quantitative Intelligence", "Market Trends", "Sentiment Analysis", "Algorithmic Trading"]
+      },
+      {
+        id: "14",
+        name: "PianoBox",
+        slug: "pianobox",
+        domain: "Music & Education",
+        role: "Touch-Screen Music Box for Kids: Piano, Sampler, Synth, Sequencer & Chord Trainer",
+        platform: "Raspberry Pi Zero 2 W / 3 / 4 / 5 · 3.5\" to 10\" touch panel · USB-MIDI keyboard",
+        protocol: "USB-MIDI (class compliant) / ALSA 48 kHz / Rust + Slint kiosk UI",
+        image: "images/pianobox/main.png",
+        description: "A Raspberry Pi with a touch screen and a USB-MIDI keyboard that boots straight into an instrument a ten-year-old can run with one finger: sampled grand piano, a sampler with a real record button, an analog-style synth, an eight-layer song recorder with mixer and effects, and a circle-of-fifths chord trainer. Open source, written in Rust.",
+        specs: [
+            "Record your own sounds, trim, loop, reverse, chop onto the keys and play them back",
+            "Eight-layer MIDI song recorder with count-in, quantize, piano roll and clip editing",
+            "Eight effects, four master compressor flavours and a lookahead limiter, all with knobs you can hear",
+            "Chord trainer on the circle of fifths with stars, lessons and a built-in help page per screen"
+        ],
+        tags: ["Music", "Education", "Raspberry Pi", "Rust", "Slint", "MIDI", "Sampler", "Synth", "Open Source"]
       }
     ];
 
@@ -718,7 +736,7 @@ INDEX_HTML = """<!DOCTYPE html>
     }
 
     // Categories Setup
-    const DOMAINS = ["ALL", "RF & EW", "Alternative PNT", "C4ISR & Recon", "Autonomy & Sim", "AI & OSINT"];
+    const DOMAINS = ["ALL", "RF & EW", "Alternative PNT", "C4ISR & Recon", "Autonomy & Sim", "AI & OSINT", "Music & Education"];
 
     function renderCategoryButtons() {
       categoryBar.innerHTML = "";

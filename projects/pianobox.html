@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PianoBox // Touch-Screen Music Box for Kids - piksliviksi</title>
+  <meta name="description" content="PianoBox turns a Raspberry Pi, a touch screen and a USB-MIDI keyboard into a sampled grand piano, sampler, synth, eight-layer song recorder and chord trainer that a ten-year-old can run with one finger.">
+
+  <!-- Tailwind CSS Engine -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+          },
+          colors: {
+            mono: {
+              950: '#07080a', 900: '#0c0e12', 850: '#111419', 800: '#181c23', 700: '#232832',
+              600: '#343b49', 500: '#525b6c', 400: '#7e889b', 300: '#b1b8c5', 200: '#dce0e7',
+              100: '#f1f3f7', 50: '#fafbfd'
+            },
+            accent: { amber: '#f59e0b', orange: '#f97316', cyan: '#0ea5e9', emerald: '#10b981', zinc: '#e4e4e7' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * { border-radius: 0px !important; }
+    body { background-color: #08090c; color: #d1d5db; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .blueprint-grid {
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .border-hairline { border: 1px solid #1c2028; }
+    .border-hairline-t { border-top: 1px solid #1c2028; }
+    .border-hairline-b { border-bottom: 1px solid #1c2028; }
+    .border-hairline-l { border-left: 1px solid #1c2028; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #08090c; }
+    ::-webkit-scrollbar-thumb { background: #232832; }
+    .shot img { image-rendering: auto; }
+  </style>
+</head>
+
+<body class="blueprint-grid min-h-screen flex flex-col selection:bg-zinc-800 selection:text-white">
+
+  <header class="border-hairline-b bg-mono-950/95 sticky top-0 z-30 backdrop-blur-sm">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-14 flex items-center justify-between gap-4">
+        <div class="flex items-center space-x-3 text-xs font-mono">
+          <a href="../index.html" class="flex items-center space-x-2 text-white font-semibold uppercase hover:text-accent-orange transition-colors">
+            <span class="w-2.5 h-2.5 bg-accent-orange inline-block"></span>
+            <span>piksliviksi</span>
+          </a>
+          <span class="text-mono-600">/</span>
+          <a href="../index.html" class="text-mono-400 hover:text-white uppercase transition">Catalog</a>
+          <span class="text-mono-600">/</span>
+          <span class="text-accent-orange font-semibold">14_PIANOBOX</span>
+        </div>
+        <div class="flex items-center space-x-3 font-mono text-xs">
+          <a href="https://github.com/piksliviksi/PianoBox" target="_blank" rel="noopener" class="inline-flex items-center space-x-1.5 px-3 py-1.5 border border-accent-orange text-accent-orange hover:bg-accent-orange hover:text-black transition text-xs font-mono">
+            <span>SOURCE ON GITHUB</span>
+            <span>↗</span>
+          </a>
+          <a href="../index.html" class="inline-flex items-center space-x-1.5 px-3 py-1.5 border border-mono-700 hover:border-mono-400 text-mono-200 hover:text-white bg-mono-900 transition text-xs font-mono">
+            <span>←</span>
+            <span>BACK TO CATALOG</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+    <!-- Identification banner -->
+    <div class="border-hairline bg-mono-900/60 p-6 sm:p-8 mb-8">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-hairline-b pb-4 mb-6">
+        <div class="flex items-center space-x-3 font-mono text-xs">
+          <span class="px-2 py-0.5 bg-accent-orange text-black font-bold">SYS_14</span>
+          <span class="px-2 py-0.5 border border-mono-700 bg-mono-950 text-mono-300 uppercase">Music &amp; Education</span>
+          <span class="px-2 py-0.5 border border-emerald-900/50 bg-emerald-950/20 text-emerald-400 uppercase text-[10px]">V1.2 BETA · RUNNING ON A PI 3B+</span>
+        </div>
+        <div class="font-mono text-xs text-mono-500 uppercase tracking-widest hidden sm:block">
+          OPEN HARDWARE · RUST · SLINT
+        </div>
+      </div>
+
+      <div class="max-w-4xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight font-sans mb-2">PianoBox</h1>
+        <div class="text-sm sm:text-base font-mono text-accent-orange mb-4">A touch-screen music box for a ten-year-old</div>
+        <p class="text-mono-300 text-sm sm:text-base leading-relaxed font-sans mb-4">
+          Plug a USB-MIDI keyboard into a Raspberry Pi with a touch screen and it boots straight into an instrument:
+          a sampled grand piano, a sampler with a real record button, an analog-style synth, an eight-layer song
+          recorder with a mixer and effects, and a chord trainer built around the circle of fifths. Every control is
+          a big, plainly labelled button or fader on a dark screen. There is no mouse, no typing and no menu tree
+          deeper than one tap.
+        </p>
+        <p class="text-mono-300 text-sm sm:text-base leading-relaxed font-sans mb-6">
+          The point is not a toy piano. It is a small studio a child can actually run, where recording a sound,
+          cutting it up, putting it on the keys, layering a song and hearing what a compressor does are all one
+          finger away. The engine is written in Rust and runs on a 512 MB Pi Zero 2 W.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 font-mono text-xs pt-4 border-hairline-t">
+          <div>
+            <span class="text-mono-500 uppercase block text-[10px]">Platform</span>
+            <span class="text-mono-200">Raspberry Pi Zero 2 W / 3 / 4 / 5 · 3.5", 7" or 10" touch panel · any USB-MIDI keyboard</span>
+          </div>
+          <div>
+            <span class="text-mono-500 uppercase block text-[10px]">Audio</span>
+            <span class="text-mono-200">48 kHz ALSA, lock-free real-time engine, 64 voices per instrument, 1 ms lookahead limiter</span>
+          </div>
+          <div>
+            <span class="text-mono-500 uppercase block text-[10px]">Repository</span>
+            <a href="https://github.com/piksliviksi/PianoBox" target="_blank" rel="noopener" class="text-accent-orange hover:text-white transition">github.com/piksliviksi/PianoBox</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screens -->
+    <section class="border-hairline bg-mono-900/40 p-6 sm:p-8 mb-8">
+      <div class="flex items-center justify-between border-hairline-b pb-4 mb-6">
+        <div class="flex items-center space-x-2 text-mono-300 font-mono text-xs uppercase tracking-widest">
+          <span class="w-2.5 h-2.5 bg-accent-orange inline-block"></span>
+          <span>The screens, one per job</span>
+        </div>
+        <span class="font-mono text-[11px] text-mono-500">RENDERED BY THE APP ITSELF AT 1024×600 · CLICK TO ENLARGE</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/main.png" alt="PianoBox main page: instrument display, volume fader, meters, transpose, tape-deck transport and the key strip" class="w-full cursor-pointer" onclick="openModal(this.src, 'PIANO')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">PIANO</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">The home screen. The display names the sound, the keys light up as you play, the meter shows how loud you are. Transpose moves every note, PLAY / STOP / REC are the tape deck for your song, BPM sets one tempo for everything. Six big buttons lead to the other pages.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/sample-empty.png" alt="Sample page before any sound is loaded, inviting the child to press REC" class="w-full cursor-pointer" onclick="openModal(this.src, 'SAMPLE · EMPTY')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">SAMPLE · THE RECORD BUTTON</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Press REC, play something, press STOP REC. The take is saved and opens as a new sound you can play on the keys. This is where "sampling" stops being a word and becomes a thing you did.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/sample.png" alt="Sample page with a waveform, start and end handles, loop, reverse, auto speed and BPM controls" class="w-full cursor-pointer" onclick="openModal(this.src, 'SAMPLE · WAVE')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">SAMPLE · WAVE</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Drag Start and End to keep the part you like; cuts snap gently to detected beats and to zero crossings so nothing pops. LOOP repeats it, REV plays it backwards, TUNE shifts it, AUTO SPEED fits a loop to the song tempo without changing its pitch.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/chop.png" alt="Chop tab: slice markers over the waveform and 4 / 8 / 16 KEYS buttons" class="w-full cursor-pointer" onclick="openModal(this.src, 'SAMPLE · CHOP')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">SAMPLE · CHOP</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Cut a loop into 4, 8 or 16 pieces and they land on the keys from C4. Play the pieces in any order, drag a marker to move a cut. A beat becomes an instrument.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/browser.png" alt="Library browser listing sample folders and favourites" class="w-full cursor-pointer" onclick="openModal(this.src, 'LIBRARY')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">LIBRARY</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Folders of sounds, your recordings, and a star for favourites. New sounds arrive from a USB stick through SETUP › ADD SOUNDS / USB: each folder with WAV files becomes a library folder.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/seq.png" alt="Sequencer page with eight layers, transport, loop, metronome and count-in" class="w-full cursor-pointer" onclick="openModal(this.src, 'SEQ')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">SEQ · BUILD A SONG</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Up to eight layers, each with its own instrument. Four clicks count you in and your playing lands on the timeline. LOOP repeats, METRO clicks (also while you just rehearse), QUANT pulls notes onto the beat.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/notes.png" alt="Piano-roll note editor with move, length and loudness tools" class="w-full cursor-pointer" onclick="openModal(this.src, 'NOTES')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">NOTES</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Tap a bar to see what you played. Drag a note to move it, make it longer or louder, or switch to SCORE to see the same notes as sheet music. In EDIT mode, hold a bar for a small menu under your finger: copy, paste, split, delete, re-record, or a new empty bar.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/clip-menu.png" alt="Sequencer EDIT mode with the hold menu open under the finger: copy, paste here, split here, delete, re-record" class="w-full cursor-pointer" onclick="openModal(this.src, 'SEQ · EDIT')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">SEQ · EDIT</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Drag a bar to move it. Hold it and a small menu opens right under your finger: copy, paste here, split here, delete, re-record. Hold an empty spot for PASTE HERE or a NEW BAR to record into.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/mix.png" alt="Mixer page with one vertical fader per layer and a master strip" class="w-full cursor-pointer" onclick="openModal(this.src, 'MIX')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">MIX</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">One fader per layer, mute buttons, effect and compressor sends, and a master strip. Green bars show the level, yellow means loud, and a red LED on the master strip glows when the little computer is asked for too much at once. The first lesson in balance.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/efx.png" alt="Effects page with two rows of pedal-style effects and the master compressor bay" class="w-full cursor-pointer" onclick="openModal(this.src, 'EFX')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">EFX</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Eight pedal-style effects with three knobs each, a reverb that can be a hall, a boingy spring or a three-head tape echo, and a dry/wet fader. Tap an effect to hear it, tap again to turn its knobs. On the right, a master compressor with a moving gain-reduction needle in four classic flavours.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/comp-edit.png" alt="Compressor editor with threshold, ratio, attack, release knobs and a VU needle" class="w-full cursor-pointer" onclick="openModal(this.src, 'MASTER COMP')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">MASTER COMP</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Threshold, ratio, attack, release, in and out, plus GENTLE / GLUE / PUNCH / LOUD presets. Watching the needle while you play is how "compression" turns from jargon into a feeling.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/synth.png" alt="Analog-style synth page with oscillator, filter and envelope knobs" class="w-full cursor-pointer" onclick="openModal(this.src, 'SYNTH')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">SYNTH</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Three oscillators, noise, a resonant filter, two envelopes and an LFO. Start from a preset, turn knobs, hold PLAY C4 to hear it without a keyboard, SAVE to keep your sound. Each song layer can carry its own patch.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/learn.png" alt="Learn page with the circle of fifths and chord tones" class="w-full cursor-pointer" onclick="openModal(this.src, 'LEARN')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">LEARN</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Tap a key on the circle of fifths. Blue is the root, green keys are the chord. Hold it right and the screen flashes and you earn a star. Lessons go from simple chords to progressions to <em>Twinkle</em>; the KEYS view shows the same thing on a piano.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/setup.png" alt="Setup page with device info, SD card usage, screen size, standby, pedal and help buttons" class="w-full cursor-pointer" onclick="openModal(this.src, 'SETUP')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">SETUP</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Screen size (auto-detected), what the pedal does, metronome level, standby, touch calibration, adding sounds from USB, and live audio and CPU figures for the grown-up.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/import.png" alt="Add sounds from USB page listing folders with WAV files" class="w-full cursor-pointer" onclick="openModal(this.src, 'ADD SOUNDS / USB')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">ADD SOUNDS / USB</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Plug in a stick, tap OPEN, and every folder that holds WAV files is listed with its count. Tap one to add it as a library folder, or ADD ALL. Nothing is ever overwritten.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/midi-learn.png" alt="MIDI Learn page listing actions and their learned controller numbers" class="w-full cursor-pointer" onclick="openModal(this.src, 'MIDI LEARN')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">MIDI LEARN</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Tap an action, then move a knob or press a button on the keyboard: play, record, metronome, loop, layer, tempo, effect bypass, reverb, mix. The pair is remembered; piano keys are never stolen.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/controls.png" alt="Help popup with one page per screen written for children" class="w-full cursor-pointer" onclick="openModal(this.src, 'HELP')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">HELP</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Eight short pages, one per screen, written for a child: what each button does and why. Reachable from SETUP at any time.</p>
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- Two columns: what a child learns / how it is built -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <section class="border-hairline bg-mono-900/50 p-6 sm:p-8">
+        <div class="flex items-center space-x-2 text-mono-300 font-mono text-xs uppercase tracking-widest border-hairline-b pb-3 mb-6">
+          <span class="w-2 h-2 bg-accent-orange inline-block"></span>
+          <span>What a child picks up along the way</span>
+        </div>
+        <ul class="space-y-4">
+          <li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans"><span class="text-accent-orange font-mono select-none font-bold mt-0.5">■</span><span><strong>Sound is something you can hold.</strong> Record it, look at its waveform, cut it, reverse it, put it on a key.</span></li>
+          <li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans"><span class="text-accent-orange font-mono select-none font-bold mt-0.5">■</span><span><strong>Rhythm has a grid.</strong> Count-in, metronome, bars and quantize make the beat visible before it is explained.</span></li>
+          <li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans"><span class="text-accent-orange font-mono select-none font-bold mt-0.5">■</span><span><strong>Songs are layers.</strong> A bass, a chord, a melody, a beat: each on its own lane, each with its own fader.</span></li>
+          <li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans"><span class="text-accent-orange font-mono select-none font-bold mt-0.5">■</span><span><strong>Harmony has a shape.</strong> Neighbours on the circle of fifths sound good together, and the chord trainer rewards getting it right.</span></li>
+          <li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans"><span class="text-accent-orange font-mono select-none font-bold mt-0.5">■</span><span><strong>Engineering words become knobs.</strong> Cutoff, envelope, reverb, compression and limiting are all things you turn and hear.</span></li>
+        </ul>
+      </section>
+
+      <section class="border-hairline bg-mono-900/50 p-6 sm:p-8">
+        <div class="flex items-center space-x-2 text-mono-300 font-mono text-xs uppercase tracking-widest border-hairline-b pb-3 mb-6">
+          <span class="w-2 h-2 bg-accent-cyan inline-block"></span>
+          <span>How it is built</span>
+        </div>
+        <ul class="space-y-4">
+          <li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans"><span class="text-accent-cyan font-mono select-none font-bold mt-0.5">▶</span><div><strong>Rust, one binary.</strong> Lock-free audio thread, ALSA output, MIDI via midir, UI in Slint rendered either by the GPU (desktop) or a software renderer straight to the Pi framebuffer (kiosk).</div></li>
+          <li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans"><span class="text-accent-cyan font-mono select-none font-bold mt-0.5">▶</span><div><strong>Original DSP.</strong> Disk-streamed velocity-layered piano (Salamander Grand, CC-BY), de-clicked sampler with slicing, three-oscillator synth, eight effects, four compressor topologies, a stereo-linked lookahead limiter, Rubber Band time-stretch for tempo-matched loops.</div></li>
+          <li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans"><span class="text-accent-cyan font-mono select-none font-bold mt-0.5">▶</span><div><strong>Crash-safe files.</strong> Songs, settings and presets are written with fsync-and-rename, with a backup that is actually read back if the power goes.</div></li>
+          <li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans"><span class="text-accent-cyan font-mono select-none font-bold mt-0.5">▶</span><div><strong>Tested headless.</strong> A harness compiles the real Slint screens at six panel sizes, taps every control and asserts the callback fired; audio gates check pitch, duration and level without a sound card.</div></li>
+          <li class="flex items-start space-x-3 text-xs sm:text-sm text-mono-200 leading-relaxed font-sans"><span class="text-accent-cyan font-mono select-none font-bold mt-0.5">▶</span><div><strong>Installers.</strong> One script each for a Raspberry Pi, an Ubuntu/Debian desktop and macOS (UI and MIDI only there), plus a cross-build script for the Pi Zero 2 W.</div></li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- Build one -->
+    <section class="border-hairline bg-mono-900/50 p-6 sm:p-8 mb-8">
+      <div class="flex items-center space-x-2 text-mono-300 font-mono text-xs uppercase tracking-widest border-hairline-b pb-3 mb-6">
+        <span class="w-2 h-2 bg-accent-orange inline-block"></span>
+        <span>Build one</span>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 gap-3">
+          <div class="border-hairline p-4 bg-mono-900/60"><span class="text-accent-orange font-mono text-xs block mb-1 font-semibold">Computer</span><span class="text-mono-200 text-xs font-sans leading-relaxed">Raspberry Pi Zero 2 W (final form) or Pi 3 / 4 / 5, 64-bit Raspberry Pi OS Lite</span></div>
+          <div class="border-hairline p-4 bg-mono-900/60"><span class="text-accent-orange font-mono text-xs block mb-1 font-semibold">Screen</span><span class="text-mono-200 text-xs font-sans leading-relaxed">10.1" 1024×600 HDMI touch, 7" 800×480, or the 3.5" 480×320 SPI kit; the UI chooses its layout from the panel</span></div>
+          <div class="border-hairline p-4 bg-mono-900/60"><span class="text-accent-orange font-mono text-xs block mb-1 font-semibold">Keys</span><span class="text-mono-200 text-xs font-sans leading-relaxed">Any class-compliant USB-MIDI keyboard; a sustain pedal becomes sustain, effect switch, play or record</span></div>
+          <div class="border-hairline p-4 bg-mono-900/60"><span class="text-accent-orange font-mono text-xs block mb-1 font-semibold">Sound</span><span class="text-mono-200 text-xs font-sans leading-relaxed">Headphone jack works; a PCM5122 / HiFiBerry-style DAC HAT sounds better. Optional USB mic as a side-chain key.</span></div>
+        </div>
+        <div class="border-hairline p-4 bg-mono-950 font-mono text-xs text-mono-200 leading-relaxed">
+          <div class="text-mono-500 uppercase text-[10px] mb-2">On the Pi</div>
+<pre class="whitespace-pre-wrap">git clone https://github.com/piksliviksi/PianoBox ~/pianobox
+cd ~/pianobox
+bash deploy/install-pi.sh --samples
+sudo reboot</pre>
+          <div class="text-mono-500 uppercase text-[10px] mt-4 mb-2">On an Ubuntu / Debian laptop, with sound</div>
+<pre class="whitespace-pre-wrap">bash deploy/install-ubuntu.sh --samples</pre>
+          <div class="text-mono-500 uppercase text-[10px] mt-4 mb-2">On a Mac (screen and MIDI only)</div>
+<pre class="whitespace-pre-wrap">bash deploy/install-macos.sh</pre>
+          <p class="text-mono-400 mt-4">The piano bank is the 1.9 GB Salamander Grand Piano (CC-BY 3.0, Alexander Holm); everything else works without it. Full manual: <span class="text-mono-200">docs/reference.md</span> in the repository.</p>
+        </div>
+      </div>
+    </section>
+
+    <nav class="border-hairline bg-mono-950 p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
+      <a href="kratt.html" class="inline-flex items-center space-x-2 text-mono-400 hover:text-white transition"><span>←</span><span>PREVIOUS: KRATT (#13)</span></a>
+      <a href="../index.html" class="px-4 py-2 border border-mono-700 bg-mono-900 text-mono-200 hover:text-white hover:border-mono-400 transition">CATALOG OVERVIEW</a>
+      <a href="https://github.com/piksliviksi/PianoBox" target="_blank" rel="noopener" class="inline-flex items-center space-x-2 text-accent-orange hover:text-white transition"><span>SOURCE: github.com/piksliviksi/PianoBox</span><span>↗</span></a>
+    </nav>
+  </main>
+
+  <div id="image-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4" onclick="closeModal()">
+    <div class="relative max-w-7xl max-h-[95vh] w-full flex flex-col items-center" onclick="event.stopPropagation()">
+      <div class="w-full flex items-center justify-between pb-3 text-mono-400 font-mono text-xs">
+        <span id="modal-title">PianoBox</span>
+        <button onclick="closeModal()" class="px-3 py-1 border border-mono-700 hover:border-white text-white bg-mono-900">CLOSE [ESC]</button>
+      </div>
+      <img id="modal-img" src="" alt="Full-size screen" class="max-h-[85vh] w-auto object-contain border-hairline shadow-2xl" />
+    </div>
+  </div>
+
+  <footer class="border-hairline-t bg-mono-950 font-mono text-xs text-mono-500 mt-auto">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <span class="w-1.5 h-1.5 bg-mono-600 inline-block"></span>
+        <span class="text-mono-400">AUTHOR: piksliviksi · TanelV 2026</span>
+        <span class="text-mono-700">|</span>
+        <span>MUSIC &amp; EDUCATION</span>
+      </div>
+      <div><a href="https://github.com/piksliviksi/PianoBox" target="_blank" rel="noopener" class="hover:text-mono-300 transition">github.com/piksliviksi/PianoBox</a></div>
+    </div>
+  </footer>
+
+  <script>
+    function openModal(src, title) {
+      document.getElementById('modal-img').src = src;
+      document.getElementById('modal-title').textContent = 'PianoBox · ' + (title || '');
+      const modal = document.getElementById('image-modal');
+      modal.classList.remove('hidden'); modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+    }
+    function closeModal() {
+      const modal = document.getElementById('image-modal');
+      modal.classList.add('hidden'); modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+    }
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+  </script>
+</body>
+</html>
