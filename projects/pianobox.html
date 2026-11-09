@@ -59,8 +59,8 @@
 
   <header class="border-hairline-b bg-mono-950/95 sticky top-0 z-30 backdrop-blur-sm">
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="h-14 flex items-center justify-between gap-4">
-        <div class="flex items-center space-x-3 text-xs font-mono">
+      <div class="min-h-14 py-3 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-3 text-xs font-mono">
           <a href="../index.html" class="flex items-center space-x-2 text-white font-semibold uppercase hover:text-accent-orange transition-colors">
             <span class="w-2.5 h-2.5 bg-accent-orange inline-block"></span>
             <span>piksliviksi</span>
@@ -70,9 +70,9 @@
           <span class="text-mono-600">/</span>
           <span class="text-accent-orange font-semibold">14_PIANOBOX</span>
         </div>
-        <div class="flex items-center space-x-3 font-mono text-xs">
-          <a href="https://github.com/piksliviksi/PianoBox" target="_blank" rel="noopener" class="inline-flex items-center space-x-1.5 px-3 py-1.5 border border-accent-orange text-accent-orange hover:bg-accent-orange hover:text-black transition text-xs font-mono">
-            <span>SOURCE ON GITHUB</span>
+        <div class="flex flex-wrap items-center gap-3 font-mono text-xs">
+          <a href="https://github.com/piksliviksi" target="_blank" rel="noopener" class="inline-flex items-center space-x-1.5 px-3 py-1.5 border border-accent-orange text-accent-orange hover:bg-accent-orange hover:text-black transition text-xs font-mono">
+            <span>CONTACT / ACCESS</span>
             <span>↗</span>
           </a>
           <a href="../index.html" class="inline-flex items-center space-x-1.5 px-3 py-1.5 border border-mono-700 hover:border-mono-400 text-mono-200 hover:text-white bg-mono-900 transition text-xs font-mono">
@@ -89,13 +89,13 @@
     <!-- Identification banner -->
     <div class="border-hairline bg-mono-900/60 p-6 sm:p-8 mb-8">
       <div class="flex flex-wrap items-center justify-between gap-4 border-hairline-b pb-4 mb-6">
-        <div class="flex items-center space-x-3 font-mono text-xs">
+        <div class="flex flex-wrap items-center gap-3 font-mono text-xs">
           <span class="px-2 py-0.5 bg-accent-orange text-black font-bold">SYS_14</span>
           <span class="px-2 py-0.5 border border-mono-700 bg-mono-950 text-mono-300 uppercase">Music &amp; Education</span>
           <span class="px-2 py-0.5 border border-emerald-900/50 bg-emerald-950/20 text-emerald-400 uppercase text-[10px]">V1.2 BETA · RUNNING ON A PI 3B+</span>
         </div>
         <div class="font-mono text-xs text-mono-500 uppercase tracking-widest hidden sm:block">
-          OPEN HARDWARE · RUST · SLINT
+          PRIVATE SOURCE · RUST · SLINT
         </div>
       </div>
 
@@ -106,13 +106,13 @@
           Plug a USB-MIDI keyboard into a Raspberry Pi with a touch screen and it boots straight into an instrument:
           a sampled grand piano, a sampler with a real record button, an analog-style synth, an eight-layer song
           recorder with a mixer and effects, and a chord trainer built around the circle of fifths. Every control is
-          a big, plainly labelled button or fader on a dark screen. There is no mouse, no typing and no menu tree
-          deeper than one tap.
+          a big, plainly labelled button or fader on a dark screen. Each page has one job, and the top row keeps
+          the main pages within reach.
         </p>
         <p class="text-mono-300 text-sm sm:text-base leading-relaxed font-sans mb-6">
-          The point is not a toy piano. It is a small studio a child can actually run, where recording a sound,
-          cutting it up, putting it on the keys, layering a song and hearing what a compressor does are all one
-          finger away. The engine is written in Rust and runs on a 512 MB Pi Zero 2 W.
+          It is a small studio a child can run: record a sound,
+          cut it up, put it on the keys, layer a song and hear what a compressor does. The main tools are one
+          finger away. The engine is written in Rust; the current hardware bench is a Raspberry Pi 3B+.
         </p>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 font-mono text-xs pt-4 border-hairline-t">
@@ -126,7 +126,7 @@
           </div>
           <div>
             <span class="text-mono-500 uppercase block text-[10px]">Repository</span>
-            <a href="https://github.com/piksliviksi/PianoBox" target="_blank" rel="noopener" class="text-accent-orange hover:text-white transition">github.com/piksliviksi/PianoBox</a>
+            <a href="https://github.com/piksliviksi" target="_blank" rel="noopener" class="text-accent-orange hover:text-white transition">Private application source</a>
           </div>
         </div>
       </div>
@@ -177,18 +177,42 @@
         </figure>
 
         <figure class="shot border-hairline bg-mono-950">
-          <img src="../images/pianobox/browser.png" alt="Library browser: a grid of sound tiles with an info panel and PICK button" class="w-full cursor-pointer" onclick="openModal(this.src, 'LIBRARY')">
+          <img src="../images/pianobox/browser.png" alt="Sound library with four wide rows and SOUNDS, MIDI FILES, MY SONGS and IMPORTED tabs" class="w-full cursor-pointer" onclick="openModal(this.src, 'LIBRARY · SOUNDS')">
           <figcaption class="p-4 border-hairline-t">
-            <div class="font-mono text-xs text-accent-orange mb-1">LIBRARY</div>
-            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Big tiles, eight per page: pianos, synth, your favourites, your own libraries and every folder of sounds. Tap once to see what it is, tap again to pick it. STAR it, ADD TO LIBRARY, or delete your own recordings. New sounds arrive from a USB stick through SETUP › ADD SOUNDS / USB.</p>
+            <div class="font-mono text-xs text-accent-orange mb-1">LIBRARY · SOUNDS</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Four clear pages separate SOUNDS, MIDI FILES, MY SONGS and IMPORTED projects. Sounds use four wide rows per page, with wrapped names that remain readable on the 3.5-inch screen. Tap once to inspect a sound and again to choose it; previous and next buttons move through the list. Your sound folder and page are remembered while browsing songs.</p>
           </figcaption>
         </figure>
 
         <figure class="shot border-hairline bg-mono-950">
-          <img src="../images/pianobox/projects.png" alt="Project browser: tiles for each song with OPEN, RENAME, EXPORT TO USB and DELETE" class="w-full cursor-pointer" onclick="openModal(this.src, 'PROJECTS')">
+          <img src="../images/pianobox/projects.png" alt="Saved PianoBox songs with open, rename, export and delete controls" class="w-full cursor-pointer" onclick="openModal(this.src, 'MY SONGS')">
           <figcaption class="p-4 border-hairline-t">
-            <div class="font-mono text-xs text-accent-orange mb-1">PROJECTS</div>
-            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Every song is a project with its own favourites, libraries and effect settings. SETUP › PROJECT opens them as tiles: + NEW, OPEN, RENAME, DELETE, and EXPORT TO USB, which copies the song, a MIDI file and every sound it uses so another PianoBox can play it.</p>
+            <div class="font-mono text-xs text-accent-orange mb-1">MY SONGS</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Every song keeps its own favourites, libraries and effect settings. MY SONGS holds songs created in PianoBox; imported work has its own page. Create a new song, open or rename one, export it to USB, or confirm its deletion.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/imported-projects.png" alt="Imported songs show their source and have rename, export and delete controls" class="w-full cursor-pointer" onclick="openModal(this.src, 'IMPORTED PROJECTS')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">IMPORTED PROJECTS</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">A separate home for imported MIDI, Logic and GarageBand songs. The source label stays with a song after renaming. IMPORT PROJECT opens local files or a USB drive; importing creates a new PianoBox song and leaves the original file untouched.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/apple-import.png" alt="Import preview with separate layers, MIDI merging, optional audio and a selected bar range" class="w-full cursor-pointer" onclick="openModal(this.src, 'MIDI &amp; APPLE IMPORT')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">MIDI &amp; APPLE IMPORT</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Bring in single-track or multitrack MIDI, native Logic projects, and GarageBand projects from Mac or iPhone/iPad. Keep parts on separate layers or merge MIDI into one instrument. Apple projects offer an explicit bar range and optional bundled WAV audio. Choose PianoBox sounds after import; Apple instruments, plugins and automation are not translated.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot border-hairline bg-mono-950">
+          <img src="../images/pianobox/export-apple.png" alt="USB export choices for native Logic and GarageBand import packs" class="w-full cursor-pointer" onclick="openModal(this.src, 'EXPORT TO USB')">
+          <figcaption class="p-4 border-hairline-t">
+            <div class="font-mono text-xs text-accent-orange mb-1">EXPORT TO USB</div>
+            <p class="text-xs sm:text-sm text-mono-300 leading-relaxed">Save a song with its used samples, export aligned WAV stems, or transfer an editable SoundCraft, DAWproject or native Logic session. Logic keeps editable MIDI alongside audio prints that preserve the PianoBox sound. GarageBand Mac and iOS choices create clearly labelled MIDI/audio import packs, not native .band projects.</p>
           </figcaption>
         </figure>
 
@@ -330,6 +354,11 @@
       </section>
     </div>
 
+    <section class="border-hairline bg-mono-900/50 p-6 sm:p-8 mb-8">
+      <h2 class="font-mono text-xs text-accent-orange uppercase tracking-widest mb-3">Transfer compatibility</h2>
+      <p class="text-sm text-mono-300 leading-relaxed">Logic export writes a native .logicx package with editable MIDI and audio prints. Its binary structure, notes and media are checked, but opening generated sessions in Logic remains an external compatibility test. GarageBand export currently uses MIDI/audio import packs for Mac and iPhone/iPad. Native .band, Ableton .als and Pro Tools .ptx export are not available. WAV stems offer a separate route for mixing in other DAWs.</p>
+    </section>
+
     <!-- Build one -->
     <section class="border-hairline bg-mono-900/50 p-6 sm:p-8 mb-8">
       <div class="flex items-center space-x-2 text-mono-300 font-mono text-xs uppercase tracking-widest border-hairline-b pb-3 mb-6">
@@ -344,9 +373,9 @@
           <div class="border-hairline p-4 bg-mono-900/60"><span class="text-accent-orange font-mono text-xs block mb-1 font-semibold">Sound</span><span class="text-mono-200 text-xs font-sans leading-relaxed">Headphone jack works; a PCM5122 / HiFiBerry-style DAC HAT sounds better. Optional USB mic as a side-chain key.</span></div>
         </div>
         <div class="border-hairline p-4 bg-mono-950 font-mono text-xs text-mono-200 leading-relaxed">
-          <div class="text-mono-500 uppercase text-[10px] mb-2">On the Pi</div>
-<pre class="whitespace-pre-wrap">git clone https://github.com/piksliviksi/PianoBox ~/pianobox
-cd ~/pianobox
+          <div class="text-mono-500 uppercase text-[10px] mb-2">For collaborators with repository access</div>
+          <p class="text-mono-300 mb-4">The application source is private. The installers below are included with an authorized checkout; there is no public source download.</p>
+<pre class="whitespace-pre-wrap">cd ~/pianobox
 bash deploy/install-pi.sh --samples
 sudo reboot</pre>
           <div class="text-mono-500 uppercase text-[10px] mt-4 mb-2">On an Ubuntu / Debian laptop, with sound</div>
@@ -361,7 +390,7 @@ sudo reboot</pre>
     <nav class="border-hairline bg-mono-950 p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
       <a href="kratt.html" class="inline-flex items-center space-x-2 text-mono-400 hover:text-white transition"><span>←</span><span>PREVIOUS: KRATT (#13)</span></a>
       <a href="../index.html" class="px-4 py-2 border border-mono-700 bg-mono-900 text-mono-200 hover:text-white hover:border-mono-400 transition">CATALOG OVERVIEW</a>
-      <a href="https://github.com/piksliviksi/PianoBox" target="_blank" rel="noopener" class="inline-flex items-center space-x-2 text-accent-orange hover:text-white transition"><span>SOURCE: github.com/piksliviksi/PianoBox</span><span>↗</span></a>
+      <a href="https://github.com/piksliviksi" target="_blank" rel="noopener" class="inline-flex items-center space-x-2 text-accent-orange hover:text-white transition"><span>PRIVATE SOURCE / CONTACT AUTHOR</span><span>↗</span></a>
     </nav>
   </main>
 
@@ -369,7 +398,7 @@ sudo reboot</pre>
     <div class="relative max-w-7xl max-h-[95vh] w-full flex flex-col items-center" onclick="event.stopPropagation()">
       <div class="w-full flex items-center justify-between pb-3 text-mono-400 font-mono text-xs">
         <span id="modal-title">PianoBox</span>
-        <button onclick="closeModal()" class="px-3 py-1 border border-mono-700 hover:border-white text-white bg-mono-900">CLOSE [ESC]</button>
+        <button onclick="closeModal()" class="min-h-11 px-4 py-2 border border-mono-700 hover:border-white text-white bg-mono-900">CLOSE [ESC]</button>
       </div>
       <img id="modal-img" src="" alt="Full-size screen" class="max-h-[85vh] w-auto object-contain border-hairline shadow-2xl" />
     </div>
@@ -383,7 +412,7 @@ sudo reboot</pre>
         <span class="text-mono-700">|</span>
         <span>MUSIC &amp; EDUCATION</span>
       </div>
-      <div><a href="https://github.com/piksliviksi/PianoBox" target="_blank" rel="noopener" class="hover:text-mono-300 transition">github.com/piksliviksi/PianoBox</a></div>
+      <div><a href="https://github.com/piksliviksi" target="_blank" rel="noopener" class="hover:text-mono-300 transition">Private application source</a></div>
     </div>
   </footer>
 
