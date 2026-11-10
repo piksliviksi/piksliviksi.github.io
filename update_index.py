@@ -648,7 +648,7 @@ INDEX_HTML = """<!DOCTYPE html>
         role: "Touch-Screen Music Box for Kids: Piano, Sampler, Synth, Sequencer & Chord Trainer",
         platform: "Raspberry Pi Zero 2 W / 3 / 4 / 5 · 3.5\" to 10\" touch panel · USB-MIDI keyboard",
         protocol: "USB-MIDI (class compliant) / ALSA 48 kHz / Rust + Slint kiosk UI",
-        image: "images/pianobox/main.png?v=1f5e331",
+        image: "images/pianobox/main.png?v=6e760d2",
         description: "A Raspberry Pi with a touch screen and a USB-MIDI keyboard that boots straight into an instrument a ten-year-old can run with one finger: sampled grand piano, a sampler with a real record button, an analog-style synth, an eight-layer song recorder with mixer and effects, and a circle-of-fifths chord trainer. Written in Rust; application source is private.",
         specs: [
             "Record your own sounds, trim, loop, reverse, chop onto the keys and play them back",

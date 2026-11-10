@@ -1,8 +1,8 @@
 {
   "app_version": "1.2 beta",
-  "app_revision": "1f5e33138dfb5d4a2a555159c4c822cc9972fa09",
-  "pi_executable_sha256": "30ac36eabcda688caa9e30d9a129092d44f950a619b2468246a64a55c2bae831",
-  "generated_at_utc": "2026-11-09T22:54:38.165562+00:00",
+  "app_revision": "6e760d24c626bd1cc891e38604a75d4677e49429",
+  "pi_executable_sha256": "3722c6a0ed7d04b498b4c7335de0f57bac588d8dc422d21f19df3a6aeb3900f6",
+  "generated_at_utc": "2026-11-10T00:08:37.365940+00:00",
   "renderer": "Current Slint UI, software renderer",
   "content": "Example sounds and songs",
   "display": {
@@ -14,122 +14,122 @@
     {
       "file": "main.png",
       "state": "main",
-      "sha256": "8f0588f28b3d5cd15a7220519805dec30f44f14583c496d916a20194d7b6037a"
+      "sha256": "e5ebb785c0ce63883356067a407aca6a800bee955d401f7bdd4b1127a518fc93"
     },
     {
       "file": "sample-empty.png",
       "state": "sample-empty",
-      "sha256": "17984dd301f295c7e22ab3fb4436a33de07801db38f2f353d24148f7854e9e35"
+      "sha256": "06c95959b2c07c8a0e333b151c5496686dbed8d6eefb130291902a1085e4fae9"
     },
     {
       "file": "sample.png",
       "state": "sample",
-      "sha256": "f062968844dd6255cdf934271bcd0180f8ef577e5a2229d21b98989340a8fbce"
+      "sha256": "5f76d7647fcf7f778a9e7f06071bf9d47fdc1fa613d14d8fea840023de75c404"
     },
     {
       "file": "chop.png",
       "state": "chop",
-      "sha256": "1fa3d3624b3ad3a0d8ff91563e2c96a4e1b735e8ec1c991be947fed6a2c3fe56"
+      "sha256": "fe8b9cb52e215b36e8c0f974241885b21bd1d81a12b6364288395aac0abb7763"
     },
     {
       "file": "browser.png",
       "state": "browser-long",
-      "sha256": "0468ba9bda63dbc064ee621d7b77d9b5d7164d875062bc0241d6e46aa6688862"
+      "sha256": "e4c837f545b0ba121e513a3934dee814782f40c8fe861d78ba7f4363d56838c3"
     },
     {
       "file": "projects.png",
       "state": "projects",
-      "sha256": "43926f8c7f2870f335aca8cc02c4e7a8da6ae8550ded05b7a890abac7a5db431"
+      "sha256": "71645273ff88525412b1da4537d5fa25434ee009a0a76f41854e12f731999487"
     },
     {
       "file": "imported-projects.png",
       "state": "imported-projects",
-      "sha256": "21a874a05b9b884301d16017ffbeeb189965c82fd9ef506acc7dc768ab347ede"
+      "sha256": "88caeb19404b1323a5c198bc67c71185ffc36a68d8ea149654aa930c5ff1437d"
     },
     {
       "file": "apple-import.png",
       "state": "apple-ready",
-      "sha256": "0f13cc2267508683335df10d1621658ff8c902f4f38ebe6f53d24bd42436df3c"
+      "sha256": "a642e192277e3adad995f6c30494121ab4a5e2bf21727d47bcc63dae7a75fcf9"
     },
     {
       "file": "export-apple.png",
       "state": "usb-apple",
-      "sha256": "1e77c42b1bfbed4ac6b28a07dd71f4bf9fbb12b6e384504ea45707b050fdabd4"
+      "sha256": "e4a1212411c22559f8c2bdf79c5f8a18eafd79d211ef6248fb9ff9fc0f8f8ac2"
     },
     {
       "file": "seq.png",
       "state": "seq",
-      "sha256": "24e6cc665a8d550ddde36748975200104b1558a46891a14153c3b8d24ba09caf"
+      "sha256": "63d0989dd2aa2ce86ef6550fc2e7cf97588659115676899fc044cdcfa524cc26"
     },
     {
       "file": "notes.png",
       "state": "notes",
-      "sha256": "27efb7c86e11def873f875a67d732bc04712cbba8915bc4c704080adae58f1ee"
+      "sha256": "d4ca65be2ffacb060f997608bf52733dd0a4025bc85e17f4f3497b047ceb2ab1"
     },
     {
       "file": "clip-menu.png",
       "state": "clip-menu",
-      "sha256": "fc104971fb5ecf13610559b9a5a2b2dc9e6fbaf275b7b86cc1b82fa51f8611d9"
+      "sha256": "e2b302cc6dadad76ce5159fb8b19e5b0b9b2e85adfc3a91a04716634c0dca102"
     },
     {
       "file": "mix.png",
       "state": "mix",
-      "sha256": "8ce5704395129c7ae3a152db82c718037c01896534d20fd3a656402ba506bcba"
+      "sha256": "7e26a414fd65fbdd6ddaeed32b8ac9628947dd35929faf6197eddf67f5f3dea8"
     },
     {
       "file": "mix-channel.png",
       "state": "mix-channel",
-      "sha256": "878116c75213a309d8d6c455883d08a41d30041616fab1f007edbabec3f34a2a"
+      "sha256": "41717f6aef575a37e33c703163dbab467be2f5d579a7bf97dbbdb067574dfce9"
     },
     {
       "file": "efx.png",
       "state": "efx",
-      "sha256": "208f96ea982a288960b7aea544e391796bf20253e2753e41fd5e8dabe1b80199"
+      "sha256": "19aab17b028a85e0ac5854b6eea67c961583341e6449d7aa288cbbff62caa41a"
     },
     {
       "file": "comp-edit.png",
       "state": "comp-edit",
-      "sha256": "da30f9b508d5e788313e35e9226a00a94a81b4102441a97a06fdb5c190ff2b35"
+      "sha256": "cdf45aa4743e16793789249c00e86b551243e008bc3e6ecb169d17b9cac3cfec"
     },
     {
       "file": "synth.png",
       "state": "synth",
-      "sha256": "cfff9aaec646c6b3bbe984f8cc35d0b99bad3539c2aac4dfb3f006bc9b9c088d"
+      "sha256": "18d5ae52062b8246ea99f21e40dce5e7f8529ff628017614bedcf20166b63caa"
     },
     {
       "file": "learn.png",
-      "state": "learn",
-      "sha256": "129da1cdcc6943e94d33a85da511f3ef827029350f72a1f216d5190725002173"
+      "state": "learn-played",
+      "sha256": "2aff613b2682330c576d877676e74a06eefe525d8b864e6030748343294db33d"
     },
     {
       "file": "setup.png",
       "state": "setup",
-      "sha256": "9aa337ac7d15170ecd6cf435b921273efb2f4b879db33096a965b4dcf259e22a"
+      "sha256": "7f841bfd6a9f6e2fe64a6070c67454ab7e37a992dbd39a5a9e15b1370e09328d"
     },
     {
       "file": "import.png",
       "state": "import",
-      "sha256": "15c1edbbd1af4399460e2ae30fbabf7fe71ace51ef9769ecce87e5a9034367fc"
+      "sha256": "8d4a25c0d8427cec94589da5e3011afae3280c6dbf4b0489e630d69869274a8c"
     },
     {
       "file": "midi-learn.png",
       "state": "midi-learn",
-      "sha256": "7402fbe7ecc54be2a638a20fe519351523177be8c080dcacbd5fa2d540a6a051"
+      "sha256": "383cbd9fbab639ceb4c78e92a44c97a9b1dd804a51d7e3df6e7ef503d72a85f1"
     },
     {
       "file": "controls.png",
       "state": "controls",
-      "sha256": "d36abf0b1f2fa455b62662d88d648c683003d9051a4983c06524f41ab075866a"
+      "sha256": "6665ce98b5442cef42c0b10cddfc131f3405c74aa4da747567393a161ae22e0e"
     },
     {
       "file": "snap.png",
       "state": "snap",
-      "sha256": "d9a62d83ac07c5a4d07b221eef13a09fa69f9b4a89ad020cd7fef18e3f14b6f0"
+      "sha256": "b49b15603acdeeaba9e029197258e141c095b9aebf68cdc2231a0ad1c5b40582"
     },
     {
       "file": "drop.png",
       "state": "drop",
-      "sha256": "d63869a23a565f6ab80948a4d2f7188114a6268db518bec6b8356e5ecc26c58f"
+      "sha256": "e24a4d1417b731e06809a5b15bf7dce15ea217a35c805be5715167b4642dc3f0"
     }
   ]
 }
